@@ -18,24 +18,24 @@ This repository is designed to make the project easy to reuse and easy to cite. 
 
 ### 1. Clone and install the lightweight runner dependencies
 
+Tested with Python 3.11; use Python 3.10 or newer.
+
 ```bash
-git clone <REPO_URL>
-cd <REPO_NAME>
+git clone https://github.com/JiataoLi/where-do-llms-go-wrong
+cd where-do-llms-go-wrong
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements-core.txt
 ```
 
-### 2. Run a one-example OpenAI-compatible smoke test
+### 2. Validate the example input without making an API call
 
 ```bash
-export OPENAI_API_KEY=your_key_here
 python scripts/run_openrouter.py \
   --input examples/example.json \
-  --output outputs/model_outputs.jsonl \
+  --output outputs/validate_openrouter.jsonl \
   --model mistralai/mistral-small-3.1-24b-instruct \
-  --base-url https://openrouter.ai/api/v1 \
-  --limit 1
+  --validate-only
 ```
 
 The input format is a JSON list of chat-message lists:
@@ -49,16 +49,19 @@ The input format is a JSON list of chat-message lists:
 ]
 ```
 
-### 3. Inspect the companion Hugging Face dataset without installing heavy packages
+### 3. Download and inspect the companion Hugging Face dataset
 
 ```bash
-python scripts/summarize_release_data.py --data-dir ../HuggingFace-Dataset/data
+hf download jiataoli/ai-reviewer-diagnostic-data \
+  --repo-type dataset \
+  --local-dir ai-reviewer-diagnostic-data
+python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data
 ```
 
 Expected output starts like this:
 
 ```text
-Data directory: ../HuggingFace-Dataset/data
+Data directory: ai-reviewer-diagnostic-data/data
 Files: 220
 Total size: 265.32 MB
 File types:
@@ -100,9 +103,10 @@ examples/             # tiny runnable examples used by README commands
 prompts/              # JSONL prompts and original prompt documents
   base_prompt.jsonl
   perturb_prompt.jsonl
-../HuggingFace-Dataset/data/ # local folder prepared for Hugging Face upload
-  annotation_scores/  # scored model outputs, tables, figures, transition matrices
-  perturbed_contents/ # perturbed paper/review/rebuttal JSONL artifacts
+data/README.md        # explains the external Hugging Face data repo
+Hugging Face dataset  # https://huggingface.co/datasets/jiataoli/ai-reviewer-diagnostic-data
+  data/annotation_scores/   # scored model outputs, tables, figures, transition matrices
+  data/perturbed_contents/  # perturbed paper/review/rebuttal JSONL artifacts
 paper/CIKM.pdf        # paper copy
 docs/                 # data/reproducibility/getting-started notes
 ```
@@ -110,54 +114,29 @@ docs/                 # data/reproducibility/getting-started notes
 For a fuller inventory, see `MANIFEST.md`.
 
 
-## Data hosting choice
+## Data hosting
 
-I recommend keeping GitHub for code/docs/prompts and Hugging Face for data. The local upload-ready dataset folder is:
-
-```text
-../HuggingFace-Dataset/
-  README.md        # Hugging Face dataset card
-  .gitattributes   # Git LFS patterns
-  data/            # release artifacts
-```
-
-Recommended public dataset repo name:
+GitHub is kept lightweight for code, prompts, examples, docs, and citation metadata. Data artifacts are hosted separately on Hugging Face:
 
 ```text
-ai-reviewer-diagnostic-data
+https://huggingface.co/datasets/jiataoli/ai-reviewer-diagnostic-data
 ```
 
-After the Hugging Face repo exists, replace `<HF_DATASET_REPO>` placeholders with:
-
-```text
-https://huggingface.co/datasets/<namespace>/ai-reviewer-diagnostic-data
-```
-
-
-## Upload to Hugging Face
-
-After confirming redistribution rights and logging in with a Hugging Face token:
-
-```bash
-hf auth login
-hf repos create ai-reviewer-diagnostic-data --type dataset
-hf upload-large-folder <namespace>/ai-reviewer-diagnostic-data ../HuggingFace-Dataset
-```
-
-Use `upload-large-folder` because the dataset contains many binary artifacts and JSONL files.
+The dataset repo includes a dataset card, Git LFS patterns, a checksum manifest, and the `data/` artifact directory.
 
 ## Common usage patterns
 
 ### OpenAI-compatible / OpenRouter inference
 
 ```bash
-export OPENAI_API_KEY=your_key_here
+export OPENROUTER_API_KEY=your_key_here
 python scripts/run_openrouter.py \
   --input examples/example.json \
   --output outputs/model_outputs.jsonl \
   --model mistralai/mistral-small-3.1-24b-instruct \
   --base-url https://openrouter.ai/api/v1 \
-  --workers 8
+  --api-key-env OPENROUTER_API_KEY \
+  --workers 1
 ```
 
 ### Gemini inference
@@ -169,7 +148,7 @@ python scripts/run_gemini.py \
   --input examples/example.json \
   --output outputs/gemini_outputs.jsonl \
   --model gemini-2.0-flash \
-  --workers 8
+  --workers 1
 ```
 
 ### Optional local vLLM inference
@@ -180,7 +159,7 @@ python scripts/run_gemini.py \
 pip install -r requirements-vllm.txt
 python scripts/run_vllm.py \
   --input examples/example.json \
-  --output outputs/vllm_outputs.json \
+  --output outputs/vllm_outputs.jsonl \
   --model-path Qwen/Qwen2.5-72B-Instruct \
   --tensor-parallel-size 8 \
   --limit 1
@@ -204,26 +183,21 @@ For your own data, replace `examples/openreview_comments_minimal.json` with an O
 pip install -r requirements-analysis.txt
 ```
 
-The analysis scripts currently operate on the JSONL/XLSX artifacts under `<HF_DATASET_REPO>/data/annotation_scores/`. See `docs/REPRODUCIBILITY.md` for known gaps and smoke tests.
+The analysis scripts operate on JSONL/XLSX artifacts after downloading the Hugging Face dataset locally. See `analysis/README.md` and `docs/REPRODUCIBILITY.md`.
 
 ## Documentation map
 
 - `docs/GETTING_STARTED.md`: shortest path for a new user.
-- `docs/DATA.md`: data contents, provenance TODOs, and redistribution warnings.
+- `docs/DATA.md`: data contents, provenance notes, and redistribution warnings.
 - `docs/REPRODUCIBILITY.md`: environment setup, smoke tests, and reproduction notes.
-- `MANIFEST.md`: file inventory and release TODOs.
+- `MANIFEST.md`: file inventory and release notes.
 - `CITATION.bib` / `CITATION.cff`: citation metadata.
 
 ## Release status
 
-This folder is a cleaned release candidate. The original raw folder contained local environments, temporary notebooks, zip archives, hard-coded local paths, and API-key scripts; those were excluded or rewritten. Runner scripts use environment variables for keys and CLI arguments for paths/models.
+This is a cleaned public-release candidate. The original raw folder contained local environments, temporary notebooks, zip archives, hard-coded local paths, and API-key scripts; those were excluded or rewritten. Runner scripts use environment variables for keys and CLI arguments for paths/models.
 
-Before a public archival release, confirm:
-
-1. Replace `LICENSE_TODO.md` with the intended code license.
-2. Confirm redistribution rights and usage constraints for all data/prompt/paper artifacts.
-3. Replace `<REPO_URL>` / `<REPO_NAME>` placeholders after creating the public repository.
-4. Decide whether the 267 MB data payload should stay in Git, move to Git LFS, or be hosted on Hugging Face / Zenodo with checksums.
+Code is MIT licensed in `LICENSE`. Data redistribution terms still need final rights confirmation before the Hugging Face dataset is made public.
 
 ## Contact
 

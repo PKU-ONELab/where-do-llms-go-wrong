@@ -1,6 +1,6 @@
 # Release Manifest
 
-This manifest summarizes the repository contents and the known release-readiness TODOs. It does not make legal, licensing, or data-rights determinations.
+This manifest summarizes the public code-release candidate. It does not make legal, licensing, or data-rights determinations for the companion dataset.
 
 ## Paper
 
@@ -13,12 +13,12 @@ DOI: https://doi.org/10.1145/3746252.3761274
 - `README.md`: front-page overview, quickstart, usage commands, and BibTeX citation.
 - `Makefile`: convenience commands, including `make smoke-test` and `make summarize-data`.
 - `requirements.txt`: compatibility install file for core runtime dependencies.
-- `requirements-core.txt`: dependencies for API-based inference scripts.
+- `requirements-core.txt`: dependencies for API-based inference and Hugging Face download helpers.
 - `requirements-analysis.txt`: dependencies for analysis scripts.
 - `requirements-vllm.txt`: optional local vLLM dependencies.
 - `CITATION.cff`: machine-readable GitHub citation metadata.
 - `CITATION.bib`: BibTeX citation for the CIKM 2025 paper.
-- `LICENSE_TODO.md`: license placeholder; replace before public archival release.
+- `LICENSE`: MIT license for repository code.
 
 ## Directories
 
@@ -27,30 +27,49 @@ DOI: https://doi.org/10.1145/3746252.3761274
 - `examples/`: small runnable example inputs for README commands.
 - `docs/`: getting-started, data, and reproducibility notes.
 - `prompts/`: prompt JSONL files and original prompt documents.
-- `../HuggingFace-Dataset/data/`: Hugging Face dataset release artifacts.
-- `paper/`: paper PDF and citation pointer.
+- `data/`: pointer to the external Hugging Face dataset.
+- `paper/`: paper citation pointer and included PDF, subject to final publisher-rights check before public release.
+- `.github/workflows/`: API-free smoke-test workflow for GitHub Actions.
 
-## User-facing entry points
+## Companion dataset
 
-Recommended first commands:
+Dataset URL:
+
+```text
+https://huggingface.co/datasets/jiataoli/ai-reviewer-diagnostic-data
+```
+
+Local dataset staging folder in this workspace:
+
+```text
+../HuggingFace-Dataset
+```
+
+It contains:
+
+- `README.md`: Hugging Face dataset card.
+- `.gitattributes`: Git LFS patterns.
+- `dataset_manifest.csv`: file path, size, and SHA256 for each data artifact.
+- `dataset_manifest_summary.json`: file count and total byte size.
+- `data/annotation_scores/` and `data/perturbed_contents/`.
+
+## User-facing first commands
 
 ```bash
 make smoke-test
-make summarize-data
+hf download jiataoli/ai-reviewer-diagnostic-data --repo-type dataset --local-dir ai-reviewer-diagnostic-data
+make summarize-data DATA_DIR=ai-reviewer-diagnostic-data/data
 ```
 
 Equivalent direct commands:
 
 ```bash
-python scripts/summarize_release_data.py --data-dir ../HuggingFace-Dataset/data
+python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data
 python scripts/clean_openreview.py --input examples/openreview_comments_minimal.json --output outputs/openreview_conversations.json --forum-id forum_example --print-text
 ```
 
-## Known release TODOs
+## Remaining public-release decisions
 
-- TODO: Replace `LICENSE_TODO.md` with the final approved code license.
-- TODO: Confirm redistribution rights and usage constraints for all files under `data/`, `prompts/original_prompts/`, and `paper/`.
-- TODO: Replace `<REPO_URL>` and `<REPO_NAME>` placeholders in `README.md` once the public GitHub repository exists.
-- TODO: Decide whether large generated artifacts should stay in Git, move to Git LFS, or be hosted on Hugging Face / Zenodo with checksums.
-- TODO: Add final provenance, hashes, and expected outputs if the release becomes a formal artifact-evaluation package.
-- TODO: Parameterize remaining analysis scripts if full end-to-end reproduction is required.
+- Confirm redistribution rights and usage constraints for all files under the Hugging Face dataset, `prompts/original_prompts/`, and `paper/`.
+- Confirm whether the included ACM paper PDF may be redistributed from GitHub; otherwise replace it with DOI/ACM/arXiv links only.
+- If full artifact-evaluation reproduction is required, parameterize the remaining analysis scripts and add expected-output fixtures for every table/figure.

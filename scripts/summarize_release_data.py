@@ -77,7 +77,7 @@ def summarize(data_dir: Path, top_n: int) -> None:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Summarize release data artifacts.")
-    parser.add_argument("--data-dir", default="data/release_data_v1", type=Path)
+    parser.add_argument("--data-dir", required=True, type=Path, help="Local dataset directory, e.g. ai-reviewer-diagnostic-data/data.")
     parser.add_argument("--top-n", default=20, type=int, help="Number of JSONL/largest-file entries to print.")
     return parser.parse_args()
 

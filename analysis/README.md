@@ -1,12 +1,20 @@
 # Analysis Scripts
 
-These scripts support analysis of the annotation-score artifacts under:
+These scripts support analysis of the annotation-score artifacts in the companion Hugging Face dataset:
 
 ```text
-../HuggingFace-Dataset/data/annotation_scores/
+https://huggingface.co/datasets/jiataoli/ai-reviewer-diagnostic-data
 ```
 
-Install analysis dependencies first:
+Download the dataset first:
+
+```bash
+hf download jiataoli/ai-reviewer-diagnostic-data \
+  --repo-type dataset \
+  --local-dir ai-reviewer-diagnostic-data
+```
+
+Install analysis dependencies:
 
 ```bash
 pip install -r requirements-analysis.txt
@@ -21,6 +29,12 @@ pip install -r requirements-analysis.txt
 - `hyp_test_simple_gap_V2.py`: extended simple-gap analysis with agreement metrics.
 - `hyp_test_simple_gap_V2_print.py`: print-oriented variant of the extended analysis.
 
-## Notes
+## Usage note
 
-The analysis scripts were preserved from the project release artifacts and may require running from the directory containing the relevant JSONL score files. See `docs/REPRODUCIBILITY.md` for current smoke tests and known gaps.
+The analysis scripts are preserved from the original experiment workflow. They expect to be run from, or pointed at, the directory containing the relevant JSONL score files. The most immediately reusable utility for new users is:
+
+```bash
+python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data
+```
+
+For exact reproduction, see `docs/REPRODUCIBILITY.md`. For new analysis work, prefer treating `ai-reviewer-diagnostic-data/data/annotation_scores/` as the canonical input directory and writing fresh outputs under `outputs/analysis/`.

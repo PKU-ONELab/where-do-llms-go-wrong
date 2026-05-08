@@ -227,6 +227,11 @@ def parse_args():
         action="store_true",
         help="Also print extracted conversation text to stdout.",
     )
+    parser.add_argument(
+        "--allow-empty",
+        action="store_true",
+        help="Allow zero selected notes or zero extracted conversations without failing.",
+    )
     return parser.parse_args()
 
 
@@ -234,7 +239,11 @@ def main():
     args = parse_args()
     raw_data = load_json(args.input)
     forum_data = select_forum_data(raw_data, args.forum_id)
+    if not forum_data and not args.allow_empty:
+        raise SystemExit("No notes matched the requested forum. Use --allow-empty to write an empty result.")
     conversations = extract_conversations(forum_data)
+    if not conversations and not args.allow_empty:
+        raise SystemExit("No conversations were extracted. Use --allow-empty to write an empty result.")
     write_json(args.output, conversations)
     if args.print_text:
         print_conversations(conversations)

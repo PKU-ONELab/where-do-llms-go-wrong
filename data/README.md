@@ -1,23 +1,23 @@
 # Data
 
-The full release artifacts are prepared as a separate Hugging Face dataset, not committed directly to this code repository.
-
-Recommended dataset repo name:
+The full release artifacts are hosted as a separate Hugging Face dataset, not committed directly to this GitHub code repository.
 
 ```text
-ai-reviewer-diagnostic-data
+https://huggingface.co/datasets/jiataoli/ai-reviewer-diagnostic-data
 ```
 
-Local prepared dataset folder:
+Download with the Hugging Face CLI:
 
-```text
-../HuggingFace-Dataset/data/
+```bash
+hf download jiataoli/ai-reviewer-diagnostic-data \
+  --repo-type dataset \
+  --local-dir ai-reviewer-diagnostic-data
 ```
 
-After uploading, replace `<HF_DATASET_REPO>` in the documentation with the public Hugging Face URL, e.g.
+Then inspect it from this code repository:
 
-```text
-https://huggingface.co/datasets/<namespace>/ai-reviewer-diagnostic-data
+```bash
+python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data
 ```
 
 Keeping data on Hugging Face makes the GitHub repository lighter and gives the dataset its own card, citation, download statistics, and version history.
