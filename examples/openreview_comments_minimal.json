@@ -1,0 +1,35 @@
+[
+  [
+    {
+      "id": "forum_example",
+      "forum": "forum_example",
+      "replyto": null,
+      "invitations": ["ExampleConference/-/Submission"],
+      "content": {}
+    },
+    {
+      "id": "review_example_1",
+      "forum": "forum_example",
+      "replyto": "forum_example",
+      "invitations": ["ExampleConference/Paper1/-/Official_Review"],
+      "signatures": ["ExampleConference/Paper1/Reviewer_ABC"],
+      "content": {
+        "summary": {"value": "The paper studies a useful problem and proposes a clear diagnostic framework."},
+        "strengths": {"value": "The perturbation design is easy to interpret."},
+        "weaknesses": {"value": "The paper should clarify limitations."},
+        "rating": {"value": "6: Weak Accept"},
+        "confidence": {"value": "3: Moderate"}
+      }
+    },
+    {
+      "id": "author_reply_example_1",
+      "forum": "forum_example",
+      "replyto": "review_example_1",
+      "invitations": ["ExampleConference/Paper1/-/Official_Comment"],
+      "signatures": ["ExampleConference/Paper1/Authors"],
+      "content": {
+        "comment": {"value": "Thank you for the constructive feedback. We will expand the limitation discussion."}
+      }
+    }
+  ]
+]

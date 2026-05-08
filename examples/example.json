@@ -1,0 +1,12 @@
+[
+  [
+    {
+      "role": "system",
+      "content": "You are a concise academic-review assistant."
+    },
+    {
+      "role": "user",
+      "content": "Summarize the main strengths and weaknesses of a paper submission in two short bullets."
+    }
+  ]
+]

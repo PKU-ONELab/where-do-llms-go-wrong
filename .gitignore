@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+*.egg-info/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Generated outputs
+outputs/
+runs/
+*.log
+
+# Large/local artifacts
+*.zip
+*.tar
+*.tar.gz
+*.ckpt
+*.pt
+*.pth
