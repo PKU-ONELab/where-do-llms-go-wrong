@@ -133,6 +133,19 @@ After the Hugging Face repo exists, replace `<HF_DATASET_REPO>` placeholders wit
 https://huggingface.co/datasets/<namespace>/ai-reviewer-diagnostic-data
 ```
 
+
+## Upload to Hugging Face
+
+After confirming redistribution rights and logging in with a Hugging Face token:
+
+```bash
+hf auth login
+hf repos create ai-reviewer-diagnostic-data --type dataset
+hf upload-large-folder <namespace>/ai-reviewer-diagnostic-data ../HuggingFace-Dataset
+```
+
+Use `upload-large-folder` because the dataset contains many binary artifacts and JSONL files.
+
 ## Common usage patterns
 
 ### OpenAI-compatible / OpenRouter inference
