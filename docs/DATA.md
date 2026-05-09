@@ -22,15 +22,12 @@ uv run hf download jiataoli/ai-reviewer-diagnostic-data \
 data/
   annotation_scores/
     *.jsonl                 # scored baseline/perturbed model outputs
-    *.xlsx                  # compact score/count tables
-    *.pdf, *.png            # generated figures
-    *.txt                   # printed summary outputs
-    pie_charts/             # decision-distribution plots
-    transition_matrices/    # transition-matrix visualizations
+    *.csv                   # compact score tables converted from spreadsheets
   perturbed_contents/
-    *.jsonl                 # perturbed paper/review/rebuttal contents
-    *.xlsx                  # count summaries
+    *.jsonl                 # paper/review/rebuttal contents used by the experiments
+    *.csv                   # compact count summaries converted from spreadsheets
 dataset_manifest.csv        # path, size_bytes, sha256
+dataset_manifest_summary.json
 ```
 
 ## Naming glossary
@@ -64,7 +61,9 @@ Where:
 | `contribution_score` | Aspect score for contribution, when present. |
 | `final_decision` | Final decision label, when present. |
 
-`perturbed_contents/*.jsonl` generally contains an `id` plus perturbed paper, review, or rebuttal content used in the experiments.
+`perturbed_contents/*.jsonl` generally contains an `id` plus the paper, review, or rebuttal content used in the experiments. Some content files are byte-identical across aspect names because the same source content was reused across multiple aspect-level scoring conditions; the condition-specific filenames are retained for direct alignment with the original experiment outputs.
+
+`*.csv` files are compact tabular summaries converted from spreadsheet artifacts for easier reuse.
 
 ## Quick inspection
 
@@ -76,7 +75,7 @@ This prints file counts, total size, JSONL row counts, sample JSON keys, and lar
 
 ## Data rights and license
 
-The code repository is MIT licensed. Dataset artifacts are distributed through the Hugging Face dataset card, which should be treated as the canonical place for dataset terms, usage notes, and version history.
+The code repository is MIT licensed. Dataset artifacts are distributed through the Hugging Face dataset card, which should be treated as the canonical place for dataset terms, usage notes, and version history. Contact-information snippets found during release QA were redacted as `[REDACTED_CONTACT_BLOCK]`.
 
 ## Handling notes
 
