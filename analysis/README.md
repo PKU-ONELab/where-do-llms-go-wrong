@@ -22,12 +22,12 @@ uv sync --extra analysis
 
 ## Files
 
-- `acc_ratio.py`: acceptance-ratio and decision-distribution analysis.
-- `hyp_test_proportion_gap.py`: proportion-gap hypothesis tests.
-- `hyp_test_proportion_gap_print.py`: print-oriented variant of proportion-gap tests.
-- `hyp_test_simple_gap.py`: simple-gap hypothesis tests.
-- `hyp_test_simple_gap_V2.py`: extended simple-gap analysis with agreement metrics.
-- `hyp_test_simple_gap_V2_print.py`: print-oriented variant of the extended analysis.
+- `acceptance_ratio_analysis.py`: acceptance-ratio and decision-distribution analysis.
+- `hypothesis_tests_proportional_decision.py`: hypothesis tests with final decisions mapped to acceptance-rate proportions.
+- `hypothesis_tests_ordinal_decision.py`: hypothesis tests with final decisions mapped to ordinal labels.
+- `hypothesis_tests_ordinal_with_agreement.py`: extended ordinal-decision tests with agreement metrics.
+
+The old print-only variants were intentionally removed because they duplicated the same tests with only extra p-value formatting.
 
 ## Usage note
 

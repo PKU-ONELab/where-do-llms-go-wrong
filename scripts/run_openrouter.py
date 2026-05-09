@@ -2,7 +2,7 @@
 
 Example:
     export OPENROUTER_API_KEY=...
-    python scripts/run_openrouter.py \
+    uv run python scripts/run_openrouter.py \
         --input examples/example.json \
         --output outputs/example.jsonl \
         --model mistralai/mistral-small-3.1-24b-instruct \

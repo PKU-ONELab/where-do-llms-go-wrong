@@ -1,7 +1,7 @@
 """Run local vLLM inference for a JSON list of chat-message lists.
 
 Example:
-    python scripts/run_vllm.py \
+    uv run python scripts/run_vllm.py \
         --input examples/example.json \
         --output outputs/qwen.jsonl \
         --model-path Qwen/Qwen2.5-72B-Instruct \

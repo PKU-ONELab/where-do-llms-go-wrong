@@ -2,7 +2,7 @@
 
 Example:
     export GEMINI_API_KEY=...
-    python scripts/run_gemini.py \
+    uv run python scripts/run_gemini.py \
         --input examples/example.json \
         --output outputs/gemini.jsonl \
         --model gemini-2.0-flash
