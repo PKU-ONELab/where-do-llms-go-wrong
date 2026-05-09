@@ -167,7 +167,7 @@ MANIFEST.md           # full release inventory
 
 ## Reproducibility path
 
-The release is organized in tiers so users can get value even if they do not have the full private/raw experiment environment:
+The release is organized in tiers so users can get value from the public code, prompts, examples, and released artifacts:
 
 1. **Immediate check:** `make quickstart` validates layout and schemas with Python only.
 2. **Code smoke test:** `make smoke-test` checks scripts without API calls or GPUs.

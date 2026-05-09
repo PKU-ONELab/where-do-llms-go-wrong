@@ -117,6 +117,6 @@ The release has been checked for:
 
 ## Known limits
 
-- The dataset is hosted separately on Hugging Face under its dataset-card terms; confirm the final public wording there before broad announcement.
+- The dataset is hosted separately on Hugging Face; treat the dataset card as canonical for dataset terms, usage notes, and version history.
 - Remaining analysis scripts are preserved from the experiment workflow and are not all fully parameterized CLIs.
 - Formal artifact-evaluation reproduction would need exact model versions, prompt versions, source snapshots, and expected outputs for every table/figure.

@@ -11,7 +11,7 @@ They support the paper **Where Do LLMs Go Wrong? Diagnosing Automated Peer Revie
 ## Download
 
 ```bash
-hf download jiataoli/ai-reviewer-diagnostic-data \
+uv run hf download jiataoli/ai-reviewer-diagnostic-data \
   --repo-type dataset \
   --local-dir ai-reviewer-diagnostic-data
 ```
@@ -69,14 +69,14 @@ Where:
 ## Quick inspection
 
 ```bash
-python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data
+uv run python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data
 ```
 
 This prints file counts, total size, JSONL row counts, sample JSON keys, and largest files without requiring pandas or other analysis dependencies.
 
-## Data-rights and release status
+## Data rights and license
 
-Before the dataset is made public, confirm redistribution rights, source terms, anonymization/sanitization status, and final dataset license. The code repository is MIT licensed; dataset artifacts may require separate terms.
+The code repository is MIT licensed. Dataset artifacts are distributed through the Hugging Face dataset card, which should be treated as the canonical place for dataset terms, usage notes, and version history.
 
 ## Handling notes
 

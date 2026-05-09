@@ -70,7 +70,7 @@ uv run python scripts/clean_openreview.py --input examples/openreview_comments_m
 - `scripts/README.md`, `analysis/README.md`, `prompts/README.md`, and `docs/` describe how to reuse each subsystem.
 - Generated outputs are ignored and removable with `make clean`.
 
-## Remaining public-release decisions
+## Maintenance notes
 
-- Confirm final redistribution wording and usage constraints on the Hugging Face dataset card before broad announcement.
+- Keep dataset redistribution wording and usage constraints in the Hugging Face dataset card rather than duplicating them here.
 - If full artifact-evaluation reproduction is required, parameterize the remaining analysis scripts and add expected-output fixtures for every table/figure.

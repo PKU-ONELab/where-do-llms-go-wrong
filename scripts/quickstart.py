@@ -108,9 +108,9 @@ def main() -> None:
             "perturb_prompt_rows": perturb_prompts,
         },
         "next_steps": [
-            "make smoke-test",
-            "hf download jiataoli/ai-reviewer-diagnostic-data --repo-type dataset --local-dir ai-reviewer-diagnostic-data",
-            "python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data",
+            "uv run make smoke-test",
+            "uv run hf download jiataoli/ai-reviewer-diagnostic-data --repo-type dataset --local-dir ai-reviewer-diagnostic-data",
+            "uv run python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data",
         ],
         "citation": {
             "doi": "10.1145/3746252.3761274",
@@ -125,7 +125,7 @@ def main() -> None:
     print(f"Validated {chat_examples} chat example(s), {openreview_notes} OpenReview note(s).")
     print(f"Prompt rows: base={base_prompts}, perturb={perturb_prompts}.")
     print(f"Wrote {output_path.relative_to(ROOT)}")
-    print("Next: run `make smoke-test`, then download the Hugging Face dataset if you need full artifacts.")
+    print("Next: run `uv run make smoke-test`, then download the Hugging Face dataset if you need full artifacts.")
 
 
 if __name__ == "__main__":
