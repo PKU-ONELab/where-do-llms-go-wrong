@@ -2,18 +2,39 @@
 
 This page is for someone who arrives from GitHub and wants to run something immediately.
 
-## Fastest API-free path
+## 1. Zero-dependency quickstart
 
 ```bash
-python3.11 -m venv .venv
+git clone https://github.com/JiataoLi/where-do-llms-go-wrong
+cd where-do-llms-go-wrong
+make quickstart
+```
+
+This validates the release layout, example schemas, prompt files, and citation metadata. It does not install packages, call an API, download models, or require the companion dataset.
+
+Expected output:
+
+```text
+AI-reviewer diagnostic release quickstart: OK
+Validated 1 chat example(s), 3 OpenReview note(s).
+Prompt rows: base=9, perturb=7.
+Wrote outputs/quickstart/quickstart_summary.json
+```
+
+The written file is a small schema/demo summary, not a model result.
+
+## 2. API-free smoke test
+
+```bash
+python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements-core.txt
 make smoke-test
 ```
 
-This validates the example inputs, compiles the Python files, checks that all inference runners can validate inputs without API/model calls, and runs the OpenReview-cleaner fixture.
+This compiles Python files, validates example inputs, checks that all inference runners can validate inputs without API/model calls, and runs the OpenReview-cleaner fixture.
 
-## Download and inspect the data
+## 3. Download and inspect the data
 
 ```bash
 hf download jiataoli/ai-reviewer-diagnostic-data \
@@ -22,14 +43,14 @@ hf download jiataoli/ai-reviewer-diagnostic-data \
 python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data
 ```
 
-Expected summary starts with the file count and artifact size, followed by JSONL row counts and largest files.
+The summary prints file counts, artifact size, file types, JSONL row counts, sample keys, and largest files.
 
-## Run one model call
+## 4. Run one model call
 
 OpenAI-compatible / OpenRouter:
 
 ```bash
-export OPENROUTER_API_KEY=your_key_here
+export OPENROUTER_API_KEY=***
 python scripts/run_openrouter.py \
   --input examples/example.json \
   --output outputs/model_outputs.jsonl \
@@ -42,7 +63,7 @@ python scripts/run_openrouter.py \
 Gemini:
 
 ```bash
-export GEMINI_API_KEY=your_key_here
+export GEMINI_API_KEY=***
 python scripts/run_gemini.py \
   --input examples/example.json \
   --output outputs/gemini_outputs.jsonl \
@@ -50,7 +71,7 @@ python scripts/run_gemini.py \
   --limit 1
 ```
 
-## Use the OpenReview cleaner
+## 5. Use the OpenReview cleaner
 
 ```bash
 python scripts/clean_openreview.py \
@@ -60,9 +81,18 @@ python scripts/clean_openreview.py \
   --print-text
 ```
 
+## 6. Cite the work
+
+Use `CITATION.bib`, `CITATION.cff`, or the BibTeX block in `README.md`. The DOI is:
+
+```text
+https://doi.org/10.1145/3746252.3761274
+```
+
 ## Where to look next
 
 - Need prompts? Start with `prompts/base_prompt.jsonl` and `prompts/perturb_prompt.jsonl`.
 - Need generated experiment artifacts? Download the Hugging Face dataset.
+- Need script examples? Read `scripts/README.md`.
 - Need analysis scripts? Start with `analysis/README.md`.
-- Need citation? Use `CITATION.bib` or the BibTeX block in `README.md`.
+- Need reproduction limits and tiers? Read `docs/REPRODUCIBILITY.md`.

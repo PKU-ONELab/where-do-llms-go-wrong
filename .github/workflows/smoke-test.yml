@@ -12,7 +12,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Run zero-dependency quickstart
+        run: make quickstart
       - name: Install lightweight dependencies
-        run: pip install -r requirements-core.txt
+        run: python -m pip install -r requirements-core.txt
       - name: Run API-free smoke test
         run: make smoke-test

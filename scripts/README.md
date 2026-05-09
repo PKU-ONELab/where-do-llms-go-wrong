@@ -1,8 +1,17 @@
 # Scripts
 
-Runnable helper scripts for inference, preprocessing, and release inspection.
+Reusable command-line tools for quickstart validation, inference, preprocessing, and data inspection.
 
-## Input format
+## Fast path
+
+```bash
+make quickstart
+make smoke-test
+```
+
+`make quickstart` is zero-dependency. `make smoke-test` requires `requirements-core.txt` and validates every runner without API/model calls.
+
+## Input format for model runners
 
 The inference runners expect a JSON list of chat-message lists:
 
@@ -17,12 +26,22 @@ The inference runners expect a JSON list of chat-message lists:
 
 Use `--validate-only` to check this format without calling an API or loading a model.
 
+## `quickstart.py`
+
+Zero-dependency release-health check.
+
+```bash
+python scripts/quickstart.py
+```
+
+It validates required files, example schemas, prompt JSONL files, and citation metadata, then writes `outputs/quickstart/quickstart_summary.json`.
+
 ## `run_openrouter.py`
 
 OpenAI-compatible API runner. Works with OpenAI-style endpoints such as OpenRouter.
 
 ```bash
-export OPENROUTER_API_KEY=your_key_here
+export OPENROUTER_API_KEY=***
 python scripts/run_openrouter.py \
   --input examples/example.json \
   --output outputs/model_outputs.jsonl \
@@ -37,7 +56,7 @@ python scripts/run_openrouter.py \
 Gemini API runner.
 
 ```bash
-export GEMINI_API_KEY=your_key_here
+export GEMINI_API_KEY=***
 python scripts/run_gemini.py \
   --input examples/example.json \
   --output outputs/gemini_outputs.jsonl \

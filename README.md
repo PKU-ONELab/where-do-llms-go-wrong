@@ -1,55 +1,75 @@
 # Where Do LLMs Go Wrong? Diagnosing Automated Peer Review
 
-Code, prompts, and release artifacts for the CIKM 2025 paper:
+[![CI](https://github.com/JiataoLi/where-do-llms-go-wrong/actions/workflows/smoke-test.yml/badge.svg)](https://github.com/JiataoLi/where-do-llms-go-wrong/actions/workflows/smoke-test.yml)
+[![Paper](https://img.shields.io/badge/CIKM-2025-blue)](https://doi.org/10.1145/3746252.3761274)
+[![Dataset](https://img.shields.io/badge/Hugging%20Face-Dataset-yellow)](https://huggingface.co/datasets/jiataoli/ai-reviewer-diagnostic-data)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+Code, prompts, lightweight examples, and reproducibility notes for the CIKM 2025 paper:
 
 > **Where Do LLMs Go Wrong? Diagnosing Automated Peer Review via Aspect-Guided Multi-Level Perturbation**  
 > Jiatao Li, Yanheng Li, Xinyu Hu, Mingqi Gao, Xiaojun Wan. CIKM 2025.  
 > DOI: https://doi.org/10.1145/3746252.3761274
 
-This repository is designed to make the project easy to reuse and easy to cite. It includes:
+If this repository helps your research, please cite the paper. Copy-paste BibTeX is below and in [`CITATION.bib`](CITATION.bib); GitHub citation metadata is in [`CITATION.cff`](CITATION.cff).
 
-- runnable API/local-LLM inference wrappers;
-- prompt files for automated peer-review diagnosis;
-- a prepared companion Hugging Face dataset folder for aspect-guided perturbation artifacts;
-- analysis scripts for score/decision-change inspection;
-- documentation for data provenance, reproducibility, and citation.
+## 30-second quickstart
 
-## Quick start
-
-### 1. Clone and install the lightweight runner dependencies
-
-Tested with Python 3.11; use Python 3.10 or newer.
+This runs without API keys, GPUs, model downloads, or the companion dataset.
 
 ```bash
 git clone https://github.com/JiataoLi/where-do-llms-go-wrong
 cd where-do-llms-go-wrong
+make quickstart
+```
+
+Expected output:
+
+```text
+AI-reviewer diagnostic release quickstart: OK
+Validated 1 chat example(s), 3 OpenReview note(s).
+Prompt rows: base=9, perturb=7.
+Wrote outputs/quickstart/quickstart_summary.json
+```
+
+`make quickstart` validates the repo layout, example schemas, prompt files, and citation metadata, then writes a tiny demo artifact under `outputs/quickstart/`. It is a format/schema demo, not a model result.
+
+## What you can reuse
+
+| Goal | Start here | Requires |
+| --- | --- | --- |
+| Check that the repo is healthy | `make quickstart` | Python only |
+| Run the API-free code smoke test | `pip install -r requirements-core.txt && make smoke-test` | lightweight Python deps |
+| Reuse the prompt templates | [`prompts/`](prompts/) | none |
+| Run API-based model inference | [`scripts/run_openrouter.py`](scripts/run_openrouter.py), [`scripts/run_gemini.py`](scripts/run_gemini.py) | API key |
+| Run local model inference | [`scripts/run_vllm.py`](scripts/run_vllm.py) | GPU + vLLM |
+| Inspect released artifacts | [`docs/DATA.md`](docs/DATA.md) + Hugging Face dataset | `huggingface_hub` |
+| Recreate analysis tables/figures | [`analysis/`](analysis/) + [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md) | dataset + analysis deps |
+
+## API-free smoke test
+
+```bash
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements-core.txt
+make smoke-test
 ```
 
-### 2. Validate the example input without making an API call
+This compiles Python files, validates example JSON, checks all inference runners in `--validate-only` mode, and runs the OpenReview-cleaner fixture. Generated files go under `outputs/` and can be removed with:
 
 ```bash
-python scripts/run_openrouter.py \
-  --input examples/example.json \
-  --output outputs/validate_openrouter.jsonl \
-  --model mistralai/mistral-small-3.1-24b-instruct \
-  --validate-only
+make clean
 ```
 
-The input format is a JSON list of chat-message lists:
+## Dataset
 
-```json
-[
-  [
-    {"role": "system", "content": "You are a concise academic-review assistant."},
-    {"role": "user", "content": "Summarize the main strengths and weaknesses of a paper submission in two short bullets."}
-  ]
-]
+Large artifacts are hosted separately on Hugging Face so the GitHub repo stays lightweight:
+
+```text
+https://huggingface.co/datasets/jiataoli/ai-reviewer-diagnostic-data
 ```
 
-### 3. Download and inspect the companion Hugging Face dataset
+Download and inspect:
 
 ```bash
 hf download jiataoli/ai-reviewer-diagnostic-data \
@@ -58,78 +78,14 @@ hf download jiataoli/ai-reviewer-diagnostic-data \
 python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data
 ```
 
-Expected output starts like this:
+Expected summary starts with file count, total size, file types, JSONL row counts, and largest files. See [`docs/DATA.md`](docs/DATA.md) for schema and naming notes.
 
-```text
-Data directory: ai-reviewer-diagnostic-data/data
-Files: 220
-Total size: 265.32 MB
-File types:
-  .png: 167
-  .jsonl: 43
-```
-
-### 4. Run the API-free smoke test
-
-```bash
-make smoke-test
-```
-
-This compiles Python files, validates example JSON, and runs the OpenReview-cleaner example. It creates `outputs/`, which is ignored by Git and can be removed with `make clean`.
-
-### 5. Cite the paper
-
-If this repository helps your work, please cite:
-
-```bibtex
-@inproceedings{li2025where,
-  title     = {Where Do LLMs Go Wrong? Diagnosing Automated Peer Review via Aspect-Guided Multi-Level Perturbation},
-  author    = {Li, Jiatao and Li, Yanheng and Hu, Xinyu and Gao, Mingqi and Wan, Xiaojun},
-  booktitle = {Proceedings of the 34th ACM International Conference on Information and Knowledge Management (CIKM '25)},
-  year      = {2025},
-  publisher = {ACM},
-  doi       = {10.1145/3746252.3761274}
-}
-```
-
-A machine-readable citation is also provided in `CITATION.cff` and `CITATION.bib`.
-
-## What is in this repository?
-
-```text
-scripts/              # runnable inference, preprocessing, and data-summary CLIs
-analysis/             # analysis scripts for annotation-score artifacts
-examples/             # tiny runnable examples used by README commands
-prompts/              # JSONL prompts and original prompt documents
-  base_prompt.jsonl
-  perturb_prompt.jsonl
-data/README.md        # explains the external Hugging Face data repo
-Hugging Face dataset  # https://huggingface.co/datasets/jiataoli/ai-reviewer-diagnostic-data
-  data/annotation_scores/   # scored model outputs, tables, figures, transition matrices
-  data/perturbed_contents/  # perturbed paper/review/rebuttal JSONL artifacts
-paper/README.md       # paper citation and official ACM DOI/PDF links
-docs/                 # data/reproducibility/getting-started notes
-```
-
-For a fuller inventory, see `MANIFEST.md`.
-
-
-## Data hosting
-
-GitHub is kept lightweight for code, prompts, examples, docs, and citation metadata. Data artifacts are hosted separately on Hugging Face:
-
-```text
-https://huggingface.co/datasets/jiataoli/ai-reviewer-diagnostic-data
-```
-
-The dataset repo includes a dataset card, Git LFS patterns, a checksum manifest, and the `data/` artifact directory.
-
-## Common usage patterns
+## Common commands
 
 ### OpenAI-compatible / OpenRouter inference
 
 ```bash
-export OPENROUTER_API_KEY=your_key_here
+export OPENROUTER_API_KEY=***
 python scripts/run_openrouter.py \
   --input examples/example.json \
   --output outputs/model_outputs.jsonl \
@@ -142,8 +98,7 @@ python scripts/run_openrouter.py \
 ### Gemini inference
 
 ```bash
-pip install -r requirements-core.txt
-export GEMINI_API_KEY=your_key_here
+export GEMINI_API_KEY=***
 python scripts/run_gemini.py \
   --input examples/example.json \
   --output outputs/gemini_outputs.jsonl \
@@ -153,7 +108,7 @@ python scripts/run_gemini.py \
 
 ### Optional local vLLM inference
 
-`vllm` is intentionally kept out of the default install because it depends on your CUDA/PyTorch/GPU setup.
+`vllm` is intentionally kept out of the default install because it depends on your CUDA, PyTorch, and GPU setup.
 
 ```bash
 pip install -r requirements-vllm.txt
@@ -165,7 +120,7 @@ python scripts/run_vllm.py \
   --limit 1
 ```
 
-### Clean an OpenReview export into review/rebuttal conversations
+### Clean an OpenReview export
 
 ```bash
 python scripts/clean_openreview.py \
@@ -177,28 +132,63 @@ python scripts/clean_openreview.py \
 
 For your own data, replace `examples/openreview_comments_minimal.json` with an OpenReview comments export.
 
-### Analysis dependencies
+## Repository layout
 
-```bash
-pip install -r requirements-analysis.txt
+```text
+scripts/              # reusable CLIs: quickstart, inference, preprocessing, data summary
+analysis/             # analysis scripts for released annotation-score artifacts
+examples/             # tiny runnable fixtures for quickstart and smoke tests
+prompts/              # curated machine-readable prompt templates
+  base_prompt.jsonl
+  perturb_prompt.jsonl
+data/README.md        # pointer to the external Hugging Face dataset
+docs/                 # getting-started, data, and reproducibility notes
+paper/README.md       # DOI, ACM PDF link, and citation pointer
+CITATION.bib          # BibTeX citation
+CITATION.cff          # GitHub citation metadata
+MANIFEST.md           # full release inventory
 ```
 
-The analysis scripts operate on JSONL/XLSX artifacts after downloading the Hugging Face dataset locally. See `analysis/README.md` and `docs/REPRODUCIBILITY.md`.
+## Reproducibility path
+
+The release is organized in tiers so users can get value even if they do not have the full private/raw experiment environment:
+
+1. **Immediate check:** `make quickstart` validates layout and schemas with Python only.
+2. **Code smoke test:** `make smoke-test` checks scripts without API calls or GPUs.
+3. **Artifact inspection:** download the Hugging Face dataset and run `summarize_release_data.py`.
+4. **Model inference:** run OpenRouter, Gemini, or vLLM wrappers on your own prompt batches.
+5. **Analysis:** use `analysis/` scripts on downloaded score artifacts.
+
+See [`docs/GETTING_STARTED.md`](docs/GETTING_STARTED.md) and [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md) for the longer guide.
+
+## Citation
+
+```bibtex
+@inproceedings{li2025where,
+  title     = {Where Do LLMs Go Wrong? Diagnosing Automated Peer Review via Aspect-Guided Multi-Level Perturbation},
+  author    = {Li, Jiatao and Li, Yanheng and Hu, Xinyu and Gao, Mingqi and Wan, Xiaojun},
+  booktitle = {Proceedings of the 34th ACM International Conference on Information and Knowledge Management (CIKM '25)},
+  year      = {2025},
+  publisher = {ACM},
+  doi       = {10.1145/3746252.3761274},
+  url       = {https://doi.org/10.1145/3746252.3761274}
+}
+```
 
 ## Documentation map
 
-- `docs/GETTING_STARTED.md`: shortest path for a new user.
-- `docs/DATA.md`: data contents, provenance notes, and redistribution warnings.
-- `docs/REPRODUCIBILITY.md`: environment setup, smoke tests, and reproduction notes.
-- `MANIFEST.md`: file inventory and release notes.
-- `CITATION.bib` / `CITATION.cff`: citation metadata.
+- [`docs/GETTING_STARTED.md`](docs/GETTING_STARTED.md): shortest path for a new user.
+- [`docs/DATA.md`](docs/DATA.md): dataset contents, schemas, naming glossary, and rights notes.
+- [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md): tiered reproduction guide.
+- [`scripts/README.md`](scripts/README.md): CLI map and examples.
+- [`analysis/README.md`](analysis/README.md): analysis script guide.
+- [`prompts/README.md`](prompts/README.md): prompt reuse notes.
+- [`MANIFEST.md`](MANIFEST.md): release inventory.
 
 ## Release status
 
-This is a cleaned public-release candidate. The original raw folder contained local environments, temporary notebooks, zip archives, hard-coded local paths, and API-key scripts; those were excluded or rewritten. Runner scripts use environment variables for keys and CLI arguments for paths/models.
-
-Code is MIT licensed in `LICENSE`. Data redistribution terms still need final rights confirmation before the Hugging Face dataset is made public.
+The GitHub repository contains code, curated prompts, docs, examples, citation metadata, and pointers to the paper/data. The ACM paper PDF is linked from [`paper/README.md`](paper/README.md) rather than redistributed here. Code is MIT licensed in [`LICENSE`](LICENSE); the dataset is hosted separately on Hugging Face under its dataset-card terms.
 
 ## Contact
 
-For questions about the paper or release, open a GitHub issue in the public repository once available.
+Open a GitHub issue in the public repository for questions, reuse requests, or reproduction problems.
