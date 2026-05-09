@@ -15,9 +15,9 @@ resolution-markers = [
 ]
 
 [[package]]
-name = "ai-reviewer-diagnostic-release"
+name = "ai-reviewer-diagnostics"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "google-genai" },
     { name = "huggingface-hub" },

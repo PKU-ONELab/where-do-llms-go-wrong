@@ -3,14 +3,30 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ai-reviewer-diagnostic-release"
+name = "ai-reviewer-diagnostics"
 version = "0.1.0"
-description = "Code, prompts, examples, and reproducibility notes for diagnosing automated peer review failures."
+description = "Diagnostic toolkit for black-box evaluation of automated peer-review systems."
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
 authors = [
   { name = "Jiatao Li" },
+]
+keywords = [
+  "automated peer review",
+  "LLM evaluation",
+  "diagnostic benchmark",
+  "peer review",
+  "perturbation analysis",
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 dependencies = [
   "tqdm>=4.66,<5",
@@ -18,6 +34,15 @@ dependencies = [
   "google-genai>=1.0,<2",
   "huggingface-hub>=0.23,<2",
 ]
+
+[project.urls]
+Homepage = "https://github.com/JiataoLi/where-do-llms-go-wrong"
+Paper = "https://doi.org/10.1145/3746252.3761274"
+Dataset = "https://huggingface.co/datasets/jiataoli/ai-reviewer-diagnostic-data"
+
+[project.scripts]
+ai-reviewer-diagnostics = "ai_reviewer_diagnostics.report:main"
+ai-reviewer-report = "ai_reviewer_diagnostics.report:main"
 
 [project.optional-dependencies]
 analysis = [
@@ -34,11 +59,8 @@ vllm = [
   "transformers>=4.45,<5",
 ]
 
-[tool.setuptools]
-py-modules = []
-
 [tool.setuptools.packages.find]
-include = []
+include = ["ai_reviewer_diagnostics*"]
 
-[tool.uv]
-package = false
+[tool.setuptools.package-data]
+"ai_reviewer_diagnostics.examples" = ["*.jsonl"]

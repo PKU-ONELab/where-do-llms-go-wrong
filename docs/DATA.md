@@ -77,6 +77,32 @@ uv run python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnosti
 
 This prints file counts, total size, JSONL row counts, sample JSON keys, and largest files without requiring pandas or other analysis dependencies.
 
+## Toolkit use with a new review system
+
+The diagnostic dataset is designed for black-box testing. A new system should produce JSONL outputs with the same `id` values as the baseline/perturbed inputs and with score/decision fields such as `overall_score`, `soundness_score`, or `final_decision`.
+
+```json
+{"id":"paper_001","overall_score":8,"soundness_score":4,"final_decision":"Accept as Poster"}
+```
+
+Then compare baseline and perturbed outputs with:
+
+```bash
+uv run ai-reviewer-diagnostics \
+  --baseline outputs/my_system_baseline.jsonl \
+  --perturbed outputs/my_system_soundness_perturbed.jsonl \
+  --condition paper/soundness \
+  --output-md reports/my_system_soundness_report.md
+```
+
+For files following the public naming convention in `annotation_scores/`, directory mode discovers matching baseline/perturbed pairs automatically:
+
+```bash
+uv run ai-reviewer-diagnostics \
+  --scores-dir ai-reviewer-diagnostic-data/data/annotation_scores \
+  --output-md reports/released_scores_report.md
+```
+
 ## Data rights and license
 
 The code repository is MIT licensed. Dataset artifacts are distributed through the Hugging Face dataset card, which should be treated as the canonical place for dataset terms, usage notes, and version history.

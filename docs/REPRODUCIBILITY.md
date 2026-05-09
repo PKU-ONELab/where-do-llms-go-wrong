@@ -19,7 +19,7 @@ Guarantees:
 
 This is a schema and release-health demo, not a model result.
 
-## Tier 1: API-free smoke test
+## Tier 1: API-free smoke test and report demo
 
 ```bash
 uv sync
@@ -29,6 +29,12 @@ uv run make smoke-test
 Equivalent direct commands:
 ```bash
 uv run python scripts/quickstart.py
+uv run ai-reviewer-diagnostics \
+  --baseline examples/system_outputs_baseline.jsonl \
+  --perturbed examples/system_outputs_perturbed_soundness.jsonl \
+  --condition paper/soundness \
+  --output-md outputs/demo_diagnostic_report.md \
+  --output-json outputs/demo_diagnostic_report.json
 uv run python -m compileall -q scripts analysis
 uv run python -m json.tool examples/example.json >/dev/null
 uv run python -m json.tool examples/openreview_comments_minimal.json >/dev/null
@@ -54,7 +60,34 @@ uv run python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnosti
 
 This checks the released artifact tree without pandas or model dependencies.
 
-## Tier 3: model/API inference
+## Tier 3: diagnostic toolkit workflow for a new review system
+
+Export your system's outputs on baseline inputs and paired perturbed inputs as JSONL with shared `id` values. At minimum, include one numeric score field or one decision field:
+
+```json
+{"id":"paper_001","overall_score":8,"soundness_score":4,"final_decision":"Accept as Poster"}
+```
+
+Then compare the pair:
+
+```bash
+uv run ai-reviewer-diagnostics \
+  --baseline outputs/my_system_baseline.jsonl \
+  --perturbed outputs/my_system_soundness_perturbed.jsonl \
+  --condition paper/soundness \
+  --output-md reports/my_system_soundness_report.md \
+  --output-json reports/my_system_soundness_report.json
+```
+
+If you export files using the released score-artifact naming convention, use directory mode:
+
+```bash
+uv run ai-reviewer-diagnostics \
+  --scores-dir ai-reviewer-diagnostic-data/data/annotation_scores \
+  --output-md reports/released_scores_report.md
+```
+
+## Tier 4: model/API inference
 
 OpenAI-compatible / OpenRouter:
 
@@ -92,7 +125,7 @@ uv run python scripts/run_vllm.py \
   --limit 1
 ```
 
-## Tier 4: analysis
+## Tier 5: analysis
 
 ```bash
 uv sync --extra analysis
@@ -109,6 +142,7 @@ The release has been checked for:
 - Python syntax validity in `scripts/` and `analysis/`;
 - JSON validity for example inputs;
 - API-free validation paths for OpenRouter, Gemini, and vLLM runners;
+- a working toy diagnostic-report path for paired baseline/perturbed system outputs;
 - a working OpenReview-cleaner smoke test on `examples/openreview_comments_minimal.json`;
 - no obvious hard-coded API keys or local machine paths in text files;
 - no tracked ACM PDF copy; `paper/README.md` links to the official DOI/PDF;
@@ -118,5 +152,5 @@ The release has been checked for:
 ## Known limits
 
 - The dataset is hosted separately on Hugging Face; treat the dataset card as canonical for dataset terms, usage notes, and version history.
-- Remaining analysis scripts are preserved from the experiment workflow and are not all fully parameterized CLIs.
+- Remaining legacy analysis scripts are preserved from the experiment workflow and are not all fully parameterized CLIs; `ai-reviewer-diagnostics` is the public entry point for evaluating new system outputs.
 - Formal artifact-evaluation reproduction would need exact model versions, prompt versions, source snapshots, and expected outputs for every table/figure.
