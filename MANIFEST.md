@@ -12,10 +12,7 @@ DOI: https://doi.org/10.1145/3746252.3761274
 
 - `README.md`: front-page overview, quickstart, usage commands, and BibTeX citation.
 - `Makefile`: convenience commands, including `make quickstart`, `make smoke-test`, and `make summarize-data`.
-- `requirements.txt`: compatibility install file for core runtime dependencies.
-- `requirements-core.txt`: dependencies for API-based inference and Hugging Face download helpers.
-- `requirements-analysis.txt`: dependencies for analysis scripts.
-- `requirements-vllm.txt`: optional local vLLM dependencies.
+- `pyproject.toml`: single dependency entry point for uv and pip-compatible installs.
 - `CITATION.cff`: machine-readable GitHub citation metadata.
 - `CITATION.bib`: BibTeX citation for the CIKM 2025 paper.
 - `LICENSE`: MIT license for repository code.
@@ -51,18 +48,18 @@ It contains:
 
 ```bash
 make quickstart
-pip install -r requirements-core.txt
-make smoke-test
-hf download jiataoli/ai-reviewer-diagnostic-data --repo-type dataset --local-dir ai-reviewer-diagnostic-data
+uv sync
+uv run make smoke-test
+uv run hf download jiataoli/ai-reviewer-diagnostic-data --repo-type dataset --local-dir ai-reviewer-diagnostic-data
 make summarize-data DATA_DIR=ai-reviewer-diagnostic-data/data
 ```
 
 Equivalent direct commands:
 
 ```bash
-python scripts/quickstart.py
-python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data
-python scripts/clean_openreview.py --input examples/openreview_comments_minimal.json --output outputs/openreview_conversations.json --forum-id forum_example --print-text
+uv run python scripts/quickstart.py
+uv run python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data
+uv run python scripts/clean_openreview.py --input examples/openreview_comments_minimal.json --output outputs/openreview_conversations.json --forum-id forum_example --print-text
 ```
 
 ## Reuse and citation affordances

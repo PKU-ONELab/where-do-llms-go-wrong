@@ -44,7 +44,7 @@ def main() -> None:
         from transformers import AutoTokenizer
         from vllm import LLM, SamplingParams
     except ImportError as exc:
-        raise SystemExit("Missing vLLM dependencies. Install with `pip install -r requirements-vllm.txt`.") from exc
+        raise SystemExit("Missing vLLM dependencies. Install with `uv sync --extra vllm`.") from exc
 
     tokenizer = AutoTokenizer.from_pretrained(args.model_path)
     prompts = tokenizer.apply_chat_template(chat_batch, tokenize=False, add_generation_prompt=True)

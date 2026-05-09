@@ -39,20 +39,36 @@ Wrote outputs/quickstart/quickstart_summary.json
 | Goal | Start here | Requires |
 | --- | --- | --- |
 | Check that the repo is healthy | `make quickstart` | Python only |
-| Run the API-free code smoke test | `pip install -r requirements-core.txt && make smoke-test` | lightweight Python deps |
+| Run the API-free code smoke test | `uv sync && uv run make smoke-test` | lightweight Python deps |
 | Reuse the prompt templates | [`prompts/`](prompts/) | none |
 | Run API-based model inference | [`scripts/run_openrouter.py`](scripts/run_openrouter.py), [`scripts/run_gemini.py`](scripts/run_gemini.py) | API key |
 | Run local model inference | [`scripts/run_vllm.py`](scripts/run_vllm.py) | GPU + vLLM |
 | Inspect released artifacts | [`docs/DATA.md`](docs/DATA.md) + Hugging Face dataset | `huggingface_hub` |
 | Recreate analysis tables/figures | [`analysis/`](analysis/) + [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md) | dataset + analysis deps |
 
+## Dependencies
+
+Dependencies are managed in [`pyproject.toml`](pyproject.toml). The default install is intentionally lightweight: API clients, `tqdm`, and Hugging Face helpers. Analysis and vLLM dependencies are optional extras.
+
+```bash
+uv sync                    # default runtime dependencies
+uv sync --extra analysis   # pandas/numpy/scipy plotting stack
+uv sync --extra vllm       # optional local GPU inference stack
+```
+
+If you do not use uv, the pip-compatible fallback is:
+
+```bash
+python -m pip install -e .
+python -m pip install -e ".[analysis]"
+python -m pip install -e ".[vllm]"
+```
+
 ## API-free smoke test
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements-core.txt
-make smoke-test
+uv sync
+uv run make smoke-test
 ```
 
 This compiles Python files, validates example JSON, checks all inference runners in `--validate-only` mode, and runs the OpenReview-cleaner fixture. Generated files go under `outputs/` and can be removed with:
@@ -72,10 +88,10 @@ https://huggingface.co/datasets/jiataoli/ai-reviewer-diagnostic-data
 Download and inspect:
 
 ```bash
-hf download jiataoli/ai-reviewer-diagnostic-data \
+uv run hf download jiataoli/ai-reviewer-diagnostic-data \
   --repo-type dataset \
   --local-dir ai-reviewer-diagnostic-data
-python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data
+uv run python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data
 ```
 
 Expected summary starts with file count, total size, file types, JSONL row counts, and largest files. See [`docs/DATA.md`](docs/DATA.md) for schema and naming notes.
@@ -86,7 +102,7 @@ Expected summary starts with file count, total size, file types, JSONL row count
 
 ```bash
 export OPENROUTER_API_KEY=***
-python scripts/run_openrouter.py \
+uv run python scripts/run_openrouter.py \
   --input examples/example.json \
   --output outputs/model_outputs.jsonl \
   --model mistralai/mistral-small-3.1-24b-instruct \
@@ -99,7 +115,7 @@ python scripts/run_openrouter.py \
 
 ```bash
 export GEMINI_API_KEY=***
-python scripts/run_gemini.py \
+uv run python scripts/run_gemini.py \
   --input examples/example.json \
   --output outputs/gemini_outputs.jsonl \
   --model gemini-2.0-flash \
@@ -111,8 +127,8 @@ python scripts/run_gemini.py \
 `vllm` is intentionally kept out of the default install because it depends on your CUDA, PyTorch, and GPU setup.
 
 ```bash
-pip install -r requirements-vllm.txt
-python scripts/run_vllm.py \
+uv sync --extra vllm
+uv run python scripts/run_vllm.py \
   --input examples/example.json \
   --output outputs/vllm_outputs.jsonl \
   --model-path Qwen/Qwen2.5-72B-Instruct \
@@ -123,7 +139,7 @@ python scripts/run_vllm.py \
 ### Clean an OpenReview export
 
 ```bash
-python scripts/clean_openreview.py \
+uv run python scripts/clean_openreview.py \
   --input examples/openreview_comments_minimal.json \
   --output outputs/openreview_conversations.json \
   --forum-id forum_example \

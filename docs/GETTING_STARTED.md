@@ -23,35 +23,46 @@ Wrote outputs/quickstart/quickstart_summary.json
 
 The written file is a small schema/demo summary, not a model result.
 
-## 2. API-free smoke test
+## 2. Install lightweight dependencies
+
+Dependencies live in `pyproject.toml`; `uv` is the recommended installer.
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements-core.txt
-make smoke-test
+uv sync
+```
+
+Pip fallback:
+
+```bash
+python -m pip install -e .
+```
+
+## 3. API-free smoke test
+
+```bash
+uv run make smoke-test
 ```
 
 This compiles Python files, validates example inputs, checks that all inference runners can validate inputs without API/model calls, and runs the OpenReview-cleaner fixture.
 
-## 3. Download and inspect the data
+## 4. Download and inspect the data
 
 ```bash
-hf download jiataoli/ai-reviewer-diagnostic-data \
+uv run hf download jiataoli/ai-reviewer-diagnostic-data \
   --repo-type dataset \
   --local-dir ai-reviewer-diagnostic-data
-python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data
+uv run python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data
 ```
 
 The summary prints file counts, artifact size, file types, JSONL row counts, sample keys, and largest files.
 
-## 4. Run one model call
+## 5. Run one model call
 
 OpenAI-compatible / OpenRouter:
 
 ```bash
 export OPENROUTER_API_KEY=***
-python scripts/run_openrouter.py \
+uv run python scripts/run_openrouter.py \
   --input examples/example.json \
   --output outputs/model_outputs.jsonl \
   --model mistralai/mistral-small-3.1-24b-instruct \
@@ -64,24 +75,24 @@ Gemini:
 
 ```bash
 export GEMINI_API_KEY=***
-python scripts/run_gemini.py \
+uv run python scripts/run_gemini.py \
   --input examples/example.json \
   --output outputs/gemini_outputs.jsonl \
   --model gemini-2.0-flash \
   --limit 1
 ```
 
-## 5. Use the OpenReview cleaner
+## 6. Use the OpenReview cleaner
 
 ```bash
-python scripts/clean_openreview.py \
+uv run python scripts/clean_openreview.py \
   --input examples/openreview_comments_minimal.json \
   --output outputs/openreview_conversations.json \
   --forum-id forum_example \
   --print-text
 ```
 
-## 6. Cite the work
+## 7. Cite the work
 
 Use `CITATION.bib`, `CITATION.cff`, or the BibTeX block in `README.md`. The DOI is:
 

@@ -74,7 +74,7 @@ def main() -> None:
     try:
         from google import genai
     except ImportError as exc:
-        raise SystemExit("Missing dependency `google-genai`. Install with `pip install -r requirements-core.txt`.") from exc
+        raise SystemExit("Missing dependency `google-genai`. Install with `uv sync`.") from exc
 
     client = genai.Client(api_key=api_key)
 

@@ -1,16 +1,20 @@
 DATA_DIR ?= ai-reviewer-diagnostic-data/data
 PYTHON ?= python
+UV ?= uv
 
-.PHONY: quickstart install-core install-analysis smoke-test summarize-data clean
+.PHONY: quickstart install install-analysis install-vllm smoke-test summarize-data clean
 
 quickstart:
 	$(PYTHON) scripts/quickstart.py
 
-install-core:
-	$(PYTHON) -m pip install -r requirements-core.txt
+install:
+	$(UV) sync
 
 install-analysis:
-	$(PYTHON) -m pip install -r requirements-analysis.txt
+	$(UV) sync --extra analysis
+
+install-vllm:
+	$(UV) sync --extra vllm
 
 summarize-data:
 	$(PYTHON) scripts/summarize_release_data.py --data-dir $(DATA_DIR)
@@ -25,4 +29,4 @@ smoke-test: quickstart
 	$(PYTHON) scripts/clean_openreview.py --input examples/openreview_comments_minimal.json --output outputs/openreview_conversations.json --forum-id forum_example
 
 clean:
-	rm -rf outputs __pycache__ scripts/__pycache__ analysis/__pycache__
+	rm -rf outputs __pycache__ scripts/__pycache__ analysis/__pycache__ *.egg-info

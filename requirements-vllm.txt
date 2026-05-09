@@ -1,3 +1,0 @@
-# Install this only in a CUDA/PyTorch environment compatible with your target model.
-vllm>=0.6,<1
-transformers>=4.45,<5
