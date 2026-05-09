@@ -27,7 +27,6 @@ data/
   perturbed_contents/
     content__source-<source>__aspect-<aspect>.jsonl
     summary__review-rebuttal-counts.csv
-  file_name_mapping.csv
 
 dataset_manifest.csv        # path, size_bytes, sha256
 dataset_manifest_summary.json
@@ -51,7 +50,7 @@ Where:
 - `<review_type>` is `review` or `meta-review`.
 - `<prompt_setting>` is a prompt condition such as `template`, `dimension`, `none`, or `template-dimension`.
 
-The original experiment filenames are preserved in `data/file_name_mapping.csv` for traceability, but the public release uses cleaner names instead of internal prefixes such as `output_test_*` and sample-size markers.
+The original experiment filenames are kept out of the public release. Public files use cleaner names instead of internal run prefixes and sample-size markers.
 
 ## Common fields
 

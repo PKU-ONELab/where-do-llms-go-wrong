@@ -53,7 +53,7 @@ def get_all_jsonl_file_in_directory(directory: str) -> list:
 
 
 def parse_file_info(file_name: str) -> dict:
-    """Parses public-release and legacy meta-review score filenames."""
+    """Parses public-release meta-review score filenames."""
     public_baseline = r"baseline__target-meta-review__prompt-([a-zA-Z0-9-]+)\.jsonl$"
     match = re.search(public_baseline, file_name)
     if match:
@@ -67,28 +67,6 @@ def parse_file_info(file_name: str) -> dict:
             "prompt_setting": match.group(3),
             "perturbation_type": f"{match.group(1)}_{match.group(2)}",
         }
-
-    # Backward-compatible parser for original experiment filenames.
-    baseline_pattern = r"output_test_base_input_meta-review_([a-zA-Z0-9-]+)_overall"
-    match = re.search(baseline_pattern, file_name)
-    if match:
-        return {"type": "baseline", "prompt_setting": match.group(1)}
-
-    pert_pattern = r"test_([a-zA-Z]+)_([a-zA-Z]+)_perturbed_meta-review_([a-zA-Z0-9-]+)_overall"
-    match = re.search(pert_pattern, file_name)
-    if match:
-        perturb_content = match.group(1)
-        perturb_aspect = match.group(2)
-        prompt_setting = match.group(3)
-        perturbation_type = f"{perturb_content}_{perturb_aspect}"
-        return {"type": "perturbation", "prompt_setting": prompt_setting, "perturbation_type": perturbation_type}
-
-    alt_pattern = r"output_test_([a-zA-Z]+)_perturbed_meta-review_([a-zA-Z0-9-]+)_overall"
-    match = re.search(alt_pattern, file_name)
-    if match:
-        perturbation_type = match.group(1)
-        prompt_setting = match.group(2)
-        return {"type": "perturbation", "prompt_setting": prompt_setting, "perturbation_type": perturbation_type}
 
     return None
 

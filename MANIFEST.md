@@ -42,7 +42,7 @@ It contains:
 - `.gitattributes`: Git LFS patterns.
 - `dataset_manifest.csv`: file path, size, and SHA256 for each data artifact.
 - `dataset_manifest_summary.json`: file count and total byte size.
-- `data/annotation_scores/`, `data/perturbed_contents/`, and `data/file_name_mapping.csv`.
+- `data/annotation_scores/` and `data/perturbed_contents/`.
 
 ## User-facing first commands
 
