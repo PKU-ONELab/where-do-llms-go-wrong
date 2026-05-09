@@ -1,9 +1,10 @@
 # Paper
 
-This directory contains the paper PDF for convenience.
+This directory points readers to the official paper page. The ACM PDF is not redistributed in this repository.
 
 ```text
-CIKM.pdf
+DOI: https://doi.org/10.1145/3746252.3761274
+ACM PDF: https://dl.acm.org/doi/pdf/10.1145/3746252.3761274
 ```
 
 Citation:

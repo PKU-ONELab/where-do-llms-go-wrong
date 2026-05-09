@@ -107,7 +107,7 @@ data/README.md        # explains the external Hugging Face data repo
 Hugging Face dataset  # https://huggingface.co/datasets/jiataoli/ai-reviewer-diagnostic-data
   data/annotation_scores/   # scored model outputs, tables, figures, transition matrices
   data/perturbed_contents/  # perturbed paper/review/rebuttal JSONL artifacts
-paper/CIKM.pdf        # paper copy
+paper/README.md       # paper citation and official ACM DOI/PDF links
 docs/                 # data/reproducibility/getting-started notes
 ```
 

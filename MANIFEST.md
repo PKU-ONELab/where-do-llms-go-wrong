@@ -28,7 +28,7 @@ DOI: https://doi.org/10.1145/3746252.3761274
 - `docs/`: getting-started, data, and reproducibility notes.
 - `prompts/`: prompt JSONL files and original prompt documents.
 - `data/`: pointer to the external Hugging Face dataset.
-- `paper/`: paper citation pointer and included PDF, subject to final publisher-rights check before public release.
+- `paper/`: paper citation pointer and official ACM DOI/PDF links. The ACM PDF is not redistributed in this repository.
 - `.github/workflows/`: API-free smoke-test workflow for GitHub Actions.
 
 ## Companion dataset
@@ -70,6 +70,5 @@ python scripts/clean_openreview.py --input examples/openreview_comments_minimal.
 
 ## Remaining public-release decisions
 
-- Confirm redistribution rights and usage constraints for all files under the Hugging Face dataset, `prompts/original_prompts/`, and `paper/`.
-- Confirm whether the included ACM paper PDF may be redistributed from GitHub; otherwise replace it with DOI/ACM/arXiv links only.
+- Confirm redistribution rights and usage constraints for all files under the Hugging Face dataset and `prompts/original_prompts/`.
 - If full artifact-evaluation reproduction is required, parameterize the remaining analysis scripts and add expected-output fixtures for every table/figure.
