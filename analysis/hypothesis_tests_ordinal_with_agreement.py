@@ -55,28 +55,28 @@ def get_all_jsonl_file_in_directory(directory: str) -> list:
         return []
 
 def parse_file_info(file_name: str) -> dict:
-    """
-    Parses the file name to extract:
-      - file type (baseline or perturbation),
-      - review_type ('meta-review' or 'review'),
-      - prompt setting,
-      - perturbation type (if any).
+    """Parses public-release and legacy score filenames."""
+    public_baseline = r"baseline__target-(meta-review|review)__prompt-([a-zA-Z0-9-]+)\.jsonl$"
+    match = re.search(public_baseline, file_name)
+    if match:
+        return {"type": "baseline", "review_type": match.group(1), "prompt_setting": match.group(2)}
 
-    Returns a dictionary or None if not recognized.
-    """
-    # 1) Baseline pattern
-    #   e.g. "output_test_base_input_meta-review_template_overall_123.jsonl"
+    public_perturbed = r"perturbed__source-([a-zA-Z]+)__aspect-([a-zA-Z]+)__target-(meta-review|review)__prompt-([a-zA-Z0-9-]+)\.jsonl$"
+    match = re.search(public_perturbed, file_name)
+    if match:
+        return {
+            "type": "perturbation",
+            "review_type": match.group(3),
+            "prompt_setting": match.group(4),
+            "perturbation_type": f"{match.group(1)}_{match.group(2)}",
+        }
+
+    # Backward-compatible parser for original experiment filenames.
     baseline_pattern = r"output_test_base_input_(meta-review|review)_(.+)_overall"
     match = re.search(baseline_pattern, file_name)
     if match:
-        return {
-            "type": "baseline",
-            "review_type": match.group(1),      # meta-review or review
-            "prompt_setting": match.group(2),   # e.g. "template"
-        }
+        return {"type": "baseline", "review_type": match.group(1), "prompt_setting": match.group(2)}
 
-    # 2) Perturbation pattern
-    #   e.g. "test_paper_soundness_perturbed_meta-review_template_overall_123.jsonl"
     pert_pattern = r"test_([a-zA-Z]+)_([a-zA-Z]+)_perturbed_(meta-review|review)_(.+)_overall"
     match = re.search(pert_pattern, file_name)
     if match:
@@ -84,12 +84,9 @@ def parse_file_info(file_name: str) -> dict:
             "type": "perturbation",
             "review_type": match.group(3),
             "prompt_setting": match.group(4),
-            "perturbation_type": f"{match.group(1)}_{match.group(2)}"
+            "perturbation_type": f"{match.group(1)}_{match.group(2)}",
         }
 
-    # 3) Alternate pattern
-    #   e.g. "output_test_review_factual_perturbed_meta-review_template_overall_123.jsonl"
-    #   If you have other naming patterns, add them similarly.
     alt_pattern = r"output_test_([a-zA-Z]+)_perturbed_(meta-review|review)_(.+)_overall"
     match = re.search(alt_pattern, file_name)
     if match:
@@ -97,10 +94,9 @@ def parse_file_info(file_name: str) -> dict:
             "type": "perturbation",
             "review_type": match.group(2),
             "prompt_setting": match.group(3),
-            "perturbation_type": match.group(1)
+            "perturbation_type": match.group(1),
         }
 
-    # No match => unrecognized
     return None
 
 

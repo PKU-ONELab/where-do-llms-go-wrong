@@ -21,23 +21,27 @@ uv run hf download jiataoli/ai-reviewer-diagnostic-data \
 ```text
 data/
   annotation_scores/
-    *.jsonl                 # scored baseline/perturbed model outputs
-    *.csv                   # compact score tables converted from spreadsheets
+    baseline__target-<review_type>__prompt-<prompt_setting>.jsonl
+    perturbed__source-<source>__aspect-<aspect>__target-<review_type>__prompt-<prompt_setting>.jsonl
+    summary__review-difference__sheet-*.csv
   perturbed_contents/
-    *.jsonl                 # paper/review/rebuttal contents used by the experiments
-    *.csv                   # compact count summaries converted from spreadsheets
+    content__source-<source>__aspect-<aspect>.jsonl
+    summary__review-rebuttal-counts.csv
+  file_name_mapping.csv
+
 dataset_manifest.csv        # path, size_bytes, sha256
 dataset_manifest_summary.json
 ```
 
 ## Naming glossary
 
-Most generated JSONL filenames encode the experiment condition:
+Public filenames use a consistent `key-value` convention separated by double underscores:
 
 ```text
-output_test_base_input_<review_type>_<prompt_setting>_overall_<n>_out.jsonl
-test_<source>_<aspect>_perturbed_<review_type>_<prompt_setting>_overall_<n>.jsonl
-Perturbed_sampled_<source>_<n>_perturb_<aspect>.jsonl
+baseline__target-<review_type>__prompt-<prompt_setting>.jsonl
+perturbed__source-<source>__aspect-<aspect>__target-<review_type>__prompt-<prompt_setting>.jsonl
+content__source-<source>__aspect-<aspect>.jsonl
+summary__<table-name>.csv
 ```
 
 Where:
@@ -45,8 +49,9 @@ Where:
 - `<source>` is usually `paper`, `review`, or `rebuttal`.
 - `<aspect>` is the perturbed dimension, e.g. `soundness`, `presentation`, `contribution`, `tone`, `factual`, `conclusion`, or `completeness`.
 - `<review_type>` is `review` or `meta-review`.
-- `<prompt_setting>` is a prompt condition such as `template`, `dimension`, or `none`.
-- `<n>` is the sample-size marker inherited from original experiment filenames. Some files with `517` in the name contain 508 rows after filtering/alignment; this is expected for the released artifacts.
+- `<prompt_setting>` is a prompt condition such as `template`, `dimension`, `none`, or `template-dimension`.
+
+The original experiment filenames are preserved in `data/file_name_mapping.csv` for traceability, but the public release uses cleaner names instead of internal prefixes such as `output_test_*` and sample-size markers.
 
 ## Common fields
 

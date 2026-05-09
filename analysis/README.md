@@ -37,4 +37,4 @@ The analysis scripts are preserved from the original experiment workflow. They e
 uv run python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data
 ```
 
-For exact reproduction, see `docs/REPRODUCIBILITY.md`. For new analysis work, prefer treating `ai-reviewer-diagnostic-data/data/annotation_scores/` as the canonical input directory and writing fresh outputs under `outputs/analysis/`.
+For exact reproduction, see `docs/REPRODUCIBILITY.md`. For new analysis work, prefer treating `ai-reviewer-diagnostic-data/data/annotation_scores/` as the canonical input directory and writing fresh outputs under `outputs/analysis/`. The analysis loaders support the public dataset filenames (`baseline__...`, `perturbed__...`) and the original experiment filenames for backward compatibility.
