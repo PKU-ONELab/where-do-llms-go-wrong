@@ -75,7 +75,7 @@ This prints file counts, total size, JSONL row counts, sample JSON keys, and lar
 
 ## Data rights and license
 
-The code repository is MIT licensed. Dataset artifacts are distributed through the Hugging Face dataset card, which should be treated as the canonical place for dataset terms, usage notes, and version history. Contact-information snippets found during release QA were redacted as `[REDACTED_CONTACT_BLOCK]`.
+The code repository is MIT licensed. Dataset artifacts are distributed through the Hugging Face dataset card, which should be treated as the canonical place for dataset terms, usage notes, and version history.
 
 ## Handling notes
 
