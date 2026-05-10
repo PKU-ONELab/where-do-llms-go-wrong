@@ -11,7 +11,7 @@ A pip-installable diagnostic toolkit for black-box evaluation of automated peer-
 
 Use it as a community evaluation tool: run any automated review system on paired original/perturbed paper, review, or rebuttal inputs; export scores or decisions; then generate aspect-level reports measuring sensitivity to soundness, presentation, contribution, tone, factuality, completeness, and recommendation perturbations.
 
-![AI reviewer diagnostics workflow](docs/assets/teaser.svg)
+![AI reviewer diagnostics workflow](docs/assets/teaser.png)
 
 Companion code, prompts, examples, and reproducibility notes for the CIKM 2025 paper:
 
