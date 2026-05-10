@@ -7,9 +7,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue)](pyproject.toml)
 
-A pip-installable diagnostic toolkit for black-box evaluation of automated peer-review systems under controlled aspect-guided perturbations.
+The official repository for our CIKM 2025 paper, **"Where Do LLMs Go Wrong? Diagnosing Automated Peer Review via Aspect-Guided Multi-Level Perturbation"**.
 
-Use it as a community evaluation tool: run any automated review system on paired original/perturbed paper, review, or rebuttal inputs; export scores or decisions; then generate aspect-level reports measuring sensitivity to soundness, presentation, contribution, tone, factuality, completeness, and recommendation perturbations.
+It also provides a pip-installable diagnostic toolkit for black-box evaluation of automated peer-review systems: run any automated review system on paired original/perturbed paper, review, or rebuttal inputs; export scores or decisions; then generate aspect-level reports measuring sensitivity to soundness, presentation, contribution, tone, factuality, completeness, and recommendation perturbations.
 
 ![AI reviewer diagnostics workflow](docs/assets/teaser.png)
 
