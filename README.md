@@ -1,6 +1,6 @@
 # Where Do LLMs Go Wrong? Diagnosing Automated Peer Review
 
-[![CI](https://github.com/JiataoLi/where-do-llms-go-wrong/actions/workflows/smoke-test.yml/badge.svg)](https://github.com/JiataoLi/where-do-llms-go-wrong/actions/workflows/smoke-test.yml)
+[![CI](https://github.com/leejamesss/where-do-llms-go-wrong/actions/workflows/smoke-test.yml/badge.svg)](https://github.com/leejamesss/where-do-llms-go-wrong/actions/workflows/smoke-test.yml)
 [![PyPI](https://img.shields.io/pypi/v/ai-reviewer-diagnostics.svg)](https://pypi.org/project/ai-reviewer-diagnostics/)
 [![Paper](https://img.shields.io/badge/CIKM-2025-blue)](https://doi.org/10.1145/3746252.3761274)
 [![Dataset](https://img.shields.io/badge/Hugging%20Face-Dataset-yellow)](https://huggingface.co/datasets/jiataoli/ai-reviewer-diagnostic-data)
@@ -33,7 +33,7 @@ ai-reviewer-diagnostics --demo --output-md outputs/demo_diagnostic_report.md
 If you want the latest GitHub version before a PyPI release catches up:
 
 ```bash
-python -m pip install "git+https://github.com/JiataoLi/where-do-llms-go-wrong.git"
+python -m pip install "git+https://github.com/leejamesss/where-do-llms-go-wrong.git"
 ```
 
 Expected package demo output:
@@ -46,7 +46,7 @@ Wrote outputs/demo_diagnostic_report.md
 For a repo checkout:
 
 ```bash
-git clone https://github.com/JiataoLi/where-do-llms-go-wrong
+git clone https://github.com/leejamesss/where-do-llms-go-wrong
 cd where-do-llms-go-wrong
 make quickstart
 make demo-report

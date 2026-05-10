@@ -5,7 +5,7 @@ This page is for someone who arrives from GitHub and wants to run something imme
 ## 1. Zero-dependency quickstart
 
 ```bash
-git clone https://github.com/JiataoLi/where-do-llms-go-wrong
+git clone https://github.com/leejamesss/where-do-llms-go-wrong
 cd where-do-llms-go-wrong
 make quickstart
 ```
@@ -41,7 +41,7 @@ outputs/demo_diagnostic_report.json
 Package-first equivalent:
 
 ```bash
-python -m pip install "git+https://github.com/JiataoLi/where-do-llms-go-wrong.git"
+python -m pip install "git+https://github.com/leejamesss/where-do-llms-go-wrong.git"
 ai-reviewer-diagnostics --demo --output-md outputs/demo_diagnostic_report.md
 ```
 

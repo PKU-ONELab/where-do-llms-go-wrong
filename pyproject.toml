@@ -36,7 +36,7 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/JiataoLi/where-do-llms-go-wrong"
+Homepage = "https://github.com/leejamesss/where-do-llms-go-wrong"
 Paper = "https://doi.org/10.1145/3746252.3761274"
 Dataset = "https://huggingface.co/datasets/jiataoli/ai-reviewer-diagnostic-data"
 
