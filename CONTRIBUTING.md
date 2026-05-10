@@ -18,7 +18,7 @@ This repository has two goals:
 ## Local setup
 
 ```bash
-git clone https://github.com/JiataoLi/where-do-llms-go-wrong
+git clone https://github.com/leejamesss/where-do-llms-go-wrong
 cd where-do-llms-go-wrong
 python -m pip install -e .
 ai-reviewer-diagnostics --demo --output-md outputs/demo_diagnostic_report.md
