@@ -80,7 +80,9 @@ This prints file counts, total size, JSONL row counts, sample JSON keys, and lar
 
 ## Toolkit use with a new review system
 
-The diagnostic dataset is designed for black-box testing. A new system should produce JSONL outputs with the same `id` values as the baseline/perturbed inputs and with score/decision fields such as `overall_score`, `soundness_score`, or `final_decision`.
+The diagnostic dataset is designed for black-box testing. A new system should produce JSONL outputs with the same `id` values as the baseline/perturbed inputs and with score/decision fields such as `overall_score`, `soundness_score`, `presentation_score`, `contribution_score`, and `final_decision`.
+
+For the released experiment score artifacts, the Hugging Face dataset includes `score_manifest.csv` and `score_manifest.md`. These record one row per score file with the condition (`baseline` or `perturbed`), perturbed source, aspect, target output type (`review` or `meta-review`), prompt setting (`none`, `template`, `dimension`, or `template-dimension`), row count, and available score fields.
 
 ```json
 {"id":"paper_001","overall_score":8,"soundness_score":4,"final_decision":"Accept as Poster"}
