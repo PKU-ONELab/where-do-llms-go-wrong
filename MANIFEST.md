@@ -45,7 +45,7 @@ It contains:
 - `.gitattributes`: Git LFS patterns.
 - `dataset_manifest.csv`: file path, size, and SHA256 for each data artifact.
 - `dataset_manifest_summary.json`: file count and total byte size.
-- `data/content_pairs/`, `data/perturbed_contents/`, and `data/annotation_scores/`.
+- `data/content_pairs/` and `data/annotation_scores/`. The redundant perturbed-only view is intentionally excluded because `content_pairs.content_after` is canonical.
 
 ## User-facing first commands
 

@@ -21,9 +21,6 @@ uv run hf download leejamesssss/ai-reviewer-diagnostic-data \
 ```text
 data/
   content_pairs/               # core before/after perturbation pairs
-  perturbed_contents/          # perturbed-only content artifacts
-    content__source-<source>__aspect-<aspect>.jsonl
-    summary__review-rebuttal-counts.csv
   annotation_scores/           # experiment score outputs
     baseline__target-<review_type>__prompt-<prompt_setting>.jsonl
     perturbed__source-<source>__aspect-<aspect>__target-<review_type>__prompt-<prompt_setting>.jsonl
@@ -40,7 +37,7 @@ Public filenames use a consistent `key-value` convention separated by double und
 ```text
 baseline__target-<review_type>__prompt-<prompt_setting>.jsonl
 perturbed__source-<source>__aspect-<aspect>__target-<review_type>__prompt-<prompt_setting>.jsonl
-content__source-<source>__aspect-<aspect>.jsonl
+pair__source-<source>__aspect-<aspect>.jsonl
 summary__<table-name>.csv
 ```
 
@@ -55,7 +52,7 @@ The original experiment filenames are kept out of the public release. Public fil
 
 ## Common fields
 
-`content_pairs/*.jsonl` is the primary reusable benchmark surface: each row pairs `content_before` with `content_after` for one source/aspect condition. Run a review system on both sides with the same `id`, then compare its outputs across perturbation aspects. `perturbed_contents/*.jsonl` keeps the perturbed-only artifacts for alignment with the original experiments. Some content files are byte-identical across aspect names because the same source content was reused across multiple aspect-level scoring conditions; the condition-specific filenames are retained for direct alignment with `annotation_scores/`.
+`content_pairs/*.jsonl` is the primary reusable benchmark surface: each row pairs `content_before` with `content_after` for one source/aspect condition. Run a review system on both sides with the same `id`, then compare its outputs across perturbation aspects. The redundant perturbed-only view is intentionally not included as a separate public surface because it duplicates `content_pairs.content_after`. Some content files are byte-identical across aspect names because the same source content was reused across multiple aspect-level scoring conditions; the condition-specific filenames are retained for direct alignment with `annotation_scores/`.
 
 `annotation_scores/*.jsonl` contains our experiment score outputs and commonly includes:
 
