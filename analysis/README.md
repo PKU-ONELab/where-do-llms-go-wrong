@@ -3,13 +3,13 @@
 These scripts support analysis of the annotation-score artifacts in the companion Hugging Face dataset:
 
 ```text
-https://huggingface.co/datasets/jiataoli/ai-reviewer-diagnostic-data
+https://huggingface.co/datasets/leejamesssss/ai-reviewer-diagnostic-data
 ```
 
 Download the dataset first:
 
 ```bash
-uv run hf download jiataoli/ai-reviewer-diagnostic-data \
+uv run hf download leejamesssss/ai-reviewer-diagnostic-data \
   --repo-type dataset \
   --local-dir ai-reviewer-diagnostic-data
 ```

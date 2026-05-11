@@ -3,13 +3,13 @@
 The full release artifacts are hosted as a separate Hugging Face dataset, not committed directly to this GitHub code repository.
 
 ```text
-https://huggingface.co/datasets/jiataoli/ai-reviewer-diagnostic-data
+https://huggingface.co/datasets/leejamesssss/ai-reviewer-diagnostic-data
 ```
 
 Download with the Hugging Face CLI:
 
 ```bash
-uv run hf download jiataoli/ai-reviewer-diagnostic-data \
+uv run hf download leejamesssss/ai-reviewer-diagnostic-data \
   --repo-type dataset \
   --local-dir ai-reviewer-diagnostic-data
 ```

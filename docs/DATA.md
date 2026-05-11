@@ -3,7 +3,7 @@
 The data artifacts live in the companion Hugging Face dataset, not in this GitHub repository:
 
 ```text
-https://huggingface.co/datasets/jiataoli/ai-reviewer-diagnostic-data
+https://huggingface.co/datasets/leejamesssss/ai-reviewer-diagnostic-data
 ```
 
 They support the paper **Where Do LLMs Go Wrong? Diagnosing Automated Peer Review via Aspect-Guided Multi-Level Perturbation**.
@@ -11,7 +11,7 @@ They support the paper **Where Do LLMs Go Wrong? Diagnosing Automated Peer Revie
 ## Download
 
 ```bash
-uv run hf download jiataoli/ai-reviewer-diagnostic-data \
+uv run hf download leejamesssss/ai-reviewer-diagnostic-data \
   --repo-type dataset \
   --local-dir ai-reviewer-diagnostic-data
 ```

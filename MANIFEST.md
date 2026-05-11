@@ -36,7 +36,7 @@ DOI: https://doi.org/10.1145/3746252.3761274
 Dataset URL:
 
 ```text
-https://huggingface.co/datasets/jiataoli/ai-reviewer-diagnostic-data
+https://huggingface.co/datasets/leejamesssss/ai-reviewer-diagnostic-data
 ```
 
 It contains:
@@ -58,7 +58,7 @@ python -m pip install -e .
 ai-reviewer-diagnostics --help
 uv sync
 uv run make smoke-test
-uv run hf download jiataoli/ai-reviewer-diagnostic-data --repo-type dataset --local-dir ai-reviewer-diagnostic-data
+uv run hf download leejamesssss/ai-reviewer-diagnostic-data --repo-type dataset --local-dir ai-reviewer-diagnostic-data
 make summarize-data DATA_DIR=ai-reviewer-diagnostic-data/data
 ```
 

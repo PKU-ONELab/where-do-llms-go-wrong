@@ -3,7 +3,7 @@
 [![CI](https://github.com/leejamesss/where-do-llms-go-wrong/actions/workflows/smoke-test.yml/badge.svg)](https://github.com/leejamesss/where-do-llms-go-wrong/actions/workflows/smoke-test.yml)
 [![PyPI](https://img.shields.io/pypi/v/ai-reviewer-diagnostics.svg)](https://pypi.org/project/ai-reviewer-diagnostics/)
 [![Paper](https://img.shields.io/badge/CIKM-2025-blue)](https://doi.org/10.1145/3746252.3761274)
-[![Dataset](https://img.shields.io/badge/Hugging%20Face-Dataset-yellow)](https://huggingface.co/datasets/jiataoli/ai-reviewer-diagnostic-data)
+[![Dataset](https://img.shields.io/badge/Hugging%20Face-Dataset-yellow)](https://huggingface.co/datasets/leejamesssss/ai-reviewer-diagnostic-data)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue)](pyproject.toml)
 
@@ -128,13 +128,13 @@ make clean
 Large artifacts are hosted separately on Hugging Face so the GitHub repo stays lightweight:
 
 ```text
-https://huggingface.co/datasets/jiataoli/ai-reviewer-diagnostic-data
+https://huggingface.co/datasets/leejamesssss/ai-reviewer-diagnostic-data
 ```
 
 Download and inspect:
 
 ```bash
-uv run hf download jiataoli/ai-reviewer-diagnostic-data \
+uv run hf download leejamesssss/ai-reviewer-diagnostic-data \
   --repo-type dataset \
   --local-dir ai-reviewer-diagnostic-data
 uv run python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data

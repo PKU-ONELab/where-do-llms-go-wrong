@@ -142,7 +142,7 @@ uv run python scripts/clean_openreview.py \
 No-dependency data inventory helper. Download the Hugging Face dataset first:
 
 ```bash
-uv run hf download jiataoli/ai-reviewer-diagnostic-data \
+uv run hf download leejamesssss/ai-reviewer-diagnostic-data \
   --repo-type dataset \
   --local-dir ai-reviewer-diagnostic-data
 uv run python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data
