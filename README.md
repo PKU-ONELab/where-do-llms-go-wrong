@@ -8,7 +8,7 @@
 
 Official repository for the CIKM 2025 paper **“Where Do LLMs Go Wrong? Diagnosing Automated Peer Review via Aspect-Guided Multi-Level Perturbation.”**
 
-Use this repo to evaluate automated peer-review systems on paired original/perturbed inputs and generate aspect-level diagnostic reports. The data lives on Hugging Face; the installable reporting CLI lives on PyPI.
+Use this repo to evaluate automated peer-review systems on paired original/perturbed inputs and generate aspect-level diagnostic reports. The data lives on [Hugging Face](https://huggingface.co/datasets/leejamesssss/ai-reviewer-diagnostic-data); the installable reporting CLI lives on [PyPI](https://pypi.org/project/ai-reviewer-diagnostics/).
 
 ![AI reviewer diagnostics workflow](https://huggingface.co/datasets/leejamesssss/ai-reviewer-diagnostic-data/resolve/main/assets/teaser.png)
 
