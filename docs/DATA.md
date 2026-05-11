@@ -55,7 +55,7 @@ The original experiment filenames are kept out of the public release. Public fil
 
 ## Common fields
 
-`perturbed_contents/*.jsonl` generally contains an `id` plus the paper, review, or rebuttal content used in the experiments. These are the primary reusable artifacts: run a review system on the paired baseline/perturbed contents, then compare its outputs across perturbation aspects. Some content files are byte-identical across aspect names because the same source content was reused across multiple aspect-level scoring conditions; the condition-specific filenames are retained for direct alignment with the original experiment outputs.
+`content_pairs/*.jsonl` is the primary reusable benchmark surface: each row pairs `content_before` with `content_after` for one source/aspect condition. Run a review system on both sides with the same `id`, then compare its outputs across perturbation aspects. `perturbed_contents/*.jsonl` keeps the perturbed-only artifacts for alignment with the original experiments. Some content files are byte-identical across aspect names because the same source content was reused across multiple aspect-level scoring conditions; the condition-specific filenames are retained for direct alignment with `annotation_scores/`.
 
 `annotation_scores/*.jsonl` contains our experiment score outputs and commonly includes:
 

@@ -248,7 +248,7 @@ The release is organized in tiers so users can get value from the public code, p
 
 1. **Immediate check:** `make quickstart` validates layout and schemas with Python only.
 2. **Code smoke test:** `make smoke-test` checks scripts without API calls or GPUs.
-3. **Artifact inspection:** download the Hugging Face dataset and inspect `perturbed_contents/` first; this is the reusable perturbation-content benchmark.
+3. **Artifact inspection:** download the Hugging Face dataset and inspect `content_pairs/` first; this is the reusable before/after perturbation benchmark. `perturbed_contents/` keeps perturbed-only artifacts for alignment with the original experiments.
 4. **Model inference:** run OpenRouter, Gemini, or vLLM wrappers on your own prompt batches.
 5. **Diagnostic report:** compare a system's baseline and perturbed outputs with `ai-reviewer-diagnostics`.
 6. **Analysis:** use `analysis/` scripts on downloaded experiment score artifacts when reproducing our reported score analyses.
