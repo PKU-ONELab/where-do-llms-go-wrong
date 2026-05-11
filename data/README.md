@@ -1,23 +1,16 @@
 # Data
 
-The full release artifacts are hosted as a separate Hugging Face dataset, not committed directly to this GitHub code repository.
+Large artifacts are hosted on Hugging Face, not committed to GitHub:
 
-```text
 https://huggingface.co/datasets/leejamesssss/ai-reviewer-diagnostic-data
-```
 
-Download with the Hugging Face CLI:
-
-```bash
-uv run hf download leejamesssss/ai-reviewer-diagnostic-data \
-  --repo-type dataset \
-  --local-dir ai-reviewer-diagnostic-data
-```
-
-Then inspect it from this code repository:
+Quick use:
 
 ```bash
-uv run python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data
+hf download leejamesssss/ai-reviewer-diagnostic-data   --repo-type dataset   --local-dir ai-reviewer-diagnostic-data
+python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data
 ```
 
-Keeping data on Hugging Face makes the GitHub repository lighter and gives the dataset its own card, citation, download statistics, and version history.
+Use `data/content_pairs/*.jsonl` first. Each row has `id`, `source`, `aspect`, `content_before`, and `content_after`. Released score artifacts live under `data/annotation_scores/` for reproduction/audit work.
+
+See [`../docs/DATA.md`](../docs/DATA.md) and the HF dataset card for schema, manifest, rights, and citation notes.

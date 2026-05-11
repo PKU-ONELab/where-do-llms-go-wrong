@@ -1,40 +1,18 @@
-# Analysis Scripts
+# Analysis
 
-These scripts support analysis of the experiment score-output artifacts in the companion Hugging Face dataset. The dataset's core contribution is the before/after perturbation pairs under `data/content_pairs/`; these analysis scripts operate on `data/annotation_scores/` when reproducing our score-based results:
-
-```text
-https://huggingface.co/datasets/leejamesssss/ai-reviewer-diagnostic-data
-```
-
-Download the dataset first:
+Scripts for inspecting released score artifacts and reproducing paper-style tables/figures. The main inputs are downloaded from Hugging Face:
 
 ```bash
-uv run hf download leejamesssss/ai-reviewer-diagnostic-data \
-  --repo-type dataset \
-  --local-dir ai-reviewer-diagnostic-data
+hf download leejamesssss/ai-reviewer-diagnostic-data   --repo-type dataset   --local-dir ai-reviewer-diagnostic-data
 ```
 
-Install analysis dependencies:
+Typical path:
 
 ```bash
 uv sync --extra analysis
+python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data
 ```
 
-## Files
+Use `ai-reviewer-diagnostic-data/data/annotation_scores/` as the canonical input for released scoring outputs. Keep generated figures/tables under `outputs/analysis/` so they stay out of Git.
 
-- `acceptance_ratio_analysis.py`: acceptance-ratio and decision-distribution analysis.
-- `hypothesis_tests_proportional_decision.py`: hypothesis tests with final decisions mapped to acceptance-rate proportions.
-- `hypothesis_tests_ordinal_decision.py`: hypothesis tests with final decisions mapped to ordinal labels.
-- `hypothesis_tests_ordinal_with_agreement.py`: extended ordinal-decision tests with agreement metrics.
-
-The old print-only variants were intentionally removed because they duplicated the same tests with only extra p-value formatting.
-
-## Usage note
-
-The analysis scripts are preserved from the original experiment workflow. They expect to be run from, or pointed at, the directory containing the relevant JSONL score files. The most immediately reusable utility for new users is:
-
-```bash
-uv run python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data
-```
-
-For exact reproduction, see `docs/REPRODUCIBILITY.md`. For new analysis work, prefer treating `ai-reviewer-diagnostic-data/data/annotation_scores/` as the canonical input directory and writing fresh outputs under `outputs/analysis/`. The analysis loaders support the public dataset filenames (`baseline__...`, `perturbed__...`) and the original experiment filenames for backward compatibility.
+For the full tiered reproduction path, see [`../docs/REPRODUCIBILITY.md`](../docs/REPRODUCIBILITY.md).

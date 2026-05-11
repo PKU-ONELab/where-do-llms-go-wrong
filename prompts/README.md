@@ -1,22 +1,15 @@
 # Prompts
 
-Curated prompt files for automated peer-review diagnosis.
+Machine-readable prompt templates used by the release:
 
-## Files
+| File | Purpose |
+| --- | --- |
+| `base_prompt.jsonl` | baseline automated-review prompts |
+| `perturb_prompt.jsonl` | aspect-guided perturbation prompts |
 
-- `base_prompt.jsonl`: base review/meta-review prompts.
-- `perturb_prompt.jsonl`: aspect-guided perturbation prompts.
+Each row is JSONL so prompts can be filtered, versioned, and reused in batch runners. `make quickstart` validates that the prompt files parse and contain the expected fields.
 
-Both files are machine-readable JSONL and are validated by `make quickstart`.
-
-## Why only curated JSONL prompts?
-
-The public release intentionally keeps reusable prompt templates and removes private working drafts, Word-document prompt experiments, raw rebuttal/review samples, and versioned intermediate files. This keeps the repository easier to cite, easier to reuse, and safer for public audiences.
-
-## Reuse
-
-You can load the prompt files with standard JSONL readers. Each line is a prompt record intended to document or reproduce the diagnostic prompt families used by the paper.
-
-## Citation
-
-If you reuse these prompts, cite the associated paper using `CITATION.bib`, `CITATION.cff`, or the BibTeX block in `README.md`.
+Reuse notes:
+- keep prompt IDs stable when comparing runs;
+- record model, decoding settings, and prompt file commit;
+- cite the paper if these prompts support follow-up work.
