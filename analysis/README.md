@@ -1,6 +1,6 @@
 # Analysis Scripts
 
-These scripts support analysis of the annotation-score artifacts in the companion Hugging Face dataset:
+These scripts support analysis of the experiment score-output artifacts in the companion Hugging Face dataset. The dataset's core contribution is the before/after perturbation pairs under `data/content_pairs/`; these analysis scripts operate on `data/annotation_scores/` when reproducing our score-based results:
 
 ```text
 https://huggingface.co/datasets/leejamesssss/ai-reviewer-diagnostic-data

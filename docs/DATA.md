@@ -6,7 +6,7 @@ The data artifacts live in the companion Hugging Face dataset, not in this GitHu
 https://huggingface.co/datasets/leejamesssss/ai-reviewer-diagnostic-data
 ```
 
-They support the paper **Where Do LLMs Go Wrong? Diagnosing Automated Peer Review via Aspect-Guided Multi-Level Perturbation**.
+They support the paper **Where Do LLMs Go Wrong? Diagnosing Automated Peer Review via Aspect-Guided Multi-Level Perturbation**. The core released dataset is the paired pre-/post-perturbation content; score files are included as experiment outputs built on top of those contents.
 
 ## Download
 
@@ -20,13 +20,14 @@ uv run hf download leejamesssss/ai-reviewer-diagnostic-data \
 
 ```text
 data/
-  annotation_scores/
+  content_pairs/               # core before/after perturbation pairs
+  perturbed_contents/          # perturbed-only content artifacts
+    content__source-<source>__aspect-<aspect>.jsonl
+    summary__review-rebuttal-counts.csv
+  annotation_scores/           # experiment score outputs
     baseline__target-<review_type>__prompt-<prompt_setting>.jsonl
     perturbed__source-<source>__aspect-<aspect>__target-<review_type>__prompt-<prompt_setting>.jsonl
     summary__review-difference__sheet-*.csv
-  perturbed_contents/
-    content__source-<source>__aspect-<aspect>.jsonl
-    summary__review-rebuttal-counts.csv
 
 dataset_manifest.csv        # path, size_bytes, sha256
 dataset_manifest_summary.json
@@ -54,7 +55,9 @@ The original experiment filenames are kept out of the public release. Public fil
 
 ## Common fields
 
-`annotation_scores/*.jsonl` commonly contains:
+`perturbed_contents/*.jsonl` generally contains an `id` plus the paper, review, or rebuttal content used in the experiments. These are the primary reusable artifacts: run a review system on the paired baseline/perturbed contents, then compare its outputs across perturbation aspects. Some content files are byte-identical across aspect names because the same source content was reused across multiple aspect-level scoring conditions; the condition-specific filenames are retained for direct alignment with the original experiment outputs.
+
+`annotation_scores/*.jsonl` contains our experiment score outputs and commonly includes:
 
 | Field | Meaning |
 | --- | --- |
@@ -64,8 +67,6 @@ The original experiment filenames are kept out of the public release. Public fil
 | `presentation_score` | Aspect score for presentation, when present. |
 | `contribution_score` | Aspect score for contribution, when present. |
 | `final_decision` | Final decision label, when present. |
-
-`perturbed_contents/*.jsonl` generally contains an `id` plus the paper, review, or rebuttal content used in the experiments. Some content files are byte-identical across aspect names because the same source content was reused across multiple aspect-level scoring conditions; the condition-specific filenames are retained for direct alignment with the original experiment outputs.
 
 `*.csv` files are compact tabular summaries converted from spreadsheet artifacts for easier reuse.
 

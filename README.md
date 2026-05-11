@@ -125,7 +125,7 @@ make clean
 
 ## Dataset
 
-Large artifacts are hosted separately on Hugging Face so the GitHub repo stays lightweight:
+The core paired pre-/post-perturbation content artifacts are hosted separately on Hugging Face so the GitHub repo stays lightweight:
 
 ```text
 https://huggingface.co/datasets/leejamesssss/ai-reviewer-diagnostic-data
@@ -140,7 +140,7 @@ uv run hf download leejamesssss/ai-reviewer-diagnostic-data \
 uv run python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data
 ```
 
-Expected summary starts with file count, total size, file types, JSONL row counts, and largest files. See [`docs/DATA.md`](docs/DATA.md) for schema and naming notes.
+Expected summary starts with file count, total size, file types, JSONL row counts, and largest files. In the current release, `content_pairs/` is the core data contribution: before/after perturbation pairs. `annotation_scores/` contains our experiment score outputs and summary tables. See [`docs/DATA.md`](docs/DATA.md) for schema and naming notes.
 
 ## Diagnostic toolkit workflow
 
@@ -228,7 +228,7 @@ For your own data, replace `examples/openreview_comments_minimal.json` with an O
 ```text
 ai_reviewer_diagnostics/ # pip-installable diagnostic report package
 scripts/              # wrappers and reusable CLIs: quickstart, inference, preprocessing, data summary
-analysis/             # analysis scripts for released annotation-score artifacts
+analysis/             # analysis scripts for released experiment score outputs
 examples/             # tiny runnable fixtures for quickstart, smoke tests, and report generation
 prompts/              # curated machine-readable prompt templates
   base_prompt.jsonl
@@ -248,10 +248,10 @@ The release is organized in tiers so users can get value from the public code, p
 
 1. **Immediate check:** `make quickstart` validates layout and schemas with Python only.
 2. **Code smoke test:** `make smoke-test` checks scripts without API calls or GPUs.
-3. **Artifact inspection:** download the Hugging Face dataset and run `summarize_release_data.py`.
+3. **Artifact inspection:** download the Hugging Face dataset and inspect `perturbed_contents/` first; this is the reusable perturbation-content benchmark.
 4. **Model inference:** run OpenRouter, Gemini, or vLLM wrappers on your own prompt batches.
 5. **Diagnostic report:** compare a system's baseline and perturbed outputs with `ai-reviewer-diagnostics`.
-6. **Analysis:** use `analysis/` scripts on downloaded score artifacts.
+6. **Analysis:** use `analysis/` scripts on downloaded experiment score artifacts when reproducing our reported score analyses.
 
 See [`docs/GETTING_STARTED.md`](docs/GETTING_STARTED.md) and [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md) for the longer guide.
 
