@@ -8,7 +8,16 @@
 
 Official repository for the CIKM 2025 paper **“Where Do LLMs Go Wrong? Diagnosing Automated Peer Review via Aspect-Guided Multi-Level Perturbation.”**
 
-Use this repo to evaluate automated peer-review systems on paired original/perturbed inputs and generate aspect-level diagnostic reports. The data lives on [Hugging Face](https://huggingface.co/datasets/PKU-ONELab/ai-reviewer-diagnostic-data); the installable reporting CLI lives on [PyPI](https://pypi.org/project/ai-reviewer-diagnostics/).
+Use this repo to evaluate automated peer-review systems on paired original/perturbed inputs and generate aspect-level diagnostic reports. The data lives on Hugging Face; the installable reporting CLI lives on PyPI.
+
+## Official resources
+
+| Resource | Link | Use |
+| --- | --- | --- |
+| Paper | [ACM DOI](https://doi.org/10.1145/3746252.3761274) | CIKM 2025 publication |
+| Dataset | [PKU-ONELab/ai-reviewer-diagnostic-data](https://huggingface.co/datasets/PKU-ONELab/ai-reviewer-diagnostic-data) | paired perturbation benchmark and released score artifacts |
+| Package | [ai-reviewer-diagnostics on PyPI](https://pypi.org/project/ai-reviewer-diagnostics/) | installable diagnostic-report CLI |
+| Code | [PKU-ONELab/where-do-llms-go-wrong](https://github.com/PKU-ONELab/where-do-llms-go-wrong) | scripts, prompts, docs, and reproducibility workflow |
 
 ![AI reviewer diagnostics workflow](https://huggingface.co/datasets/PKU-ONELab/ai-reviewer-diagnostic-data/resolve/main/assets/teaser.png)
 

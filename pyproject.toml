@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ai-reviewer-diagnostics"
-version = "0.1.4"
-description = "Diagnostic toolkit for black-box evaluation of automated peer-review systems."
+version = "0.1.5"
+description = "Diagnostic CLI for evaluating automated peer-review systems with aspect-guided perturbation data."
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
