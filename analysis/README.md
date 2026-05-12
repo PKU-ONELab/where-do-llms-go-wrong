@@ -3,7 +3,7 @@
 Scripts for inspecting released score artifacts and reproducing paper-style tables/figures. The main inputs are downloaded from Hugging Face:
 
 ```bash
-hf download leejamesssss/ai-reviewer-diagnostic-data   --repo-type dataset   --local-dir ai-reviewer-diagnostic-data
+hf download PKU-ONELab/ai-reviewer-diagnostic-data   --repo-type dataset   --local-dir ai-reviewer-diagnostic-data
 ```
 
 Typical path:

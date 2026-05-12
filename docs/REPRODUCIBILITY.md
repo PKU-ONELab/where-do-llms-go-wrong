@@ -52,7 +52,7 @@ Generated files go under `outputs/` and can be removed with `make clean`.
 ## Tier 2: dataset inspection
 
 ```bash
-uv run hf download leejamesssss/ai-reviewer-diagnostic-data \
+uv run hf download PKU-ONELab/ai-reviewer-diagnostic-data \
   --repo-type dataset \
   --local-dir ai-reviewer-diagnostic-data
 uv run python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data --top-n 5

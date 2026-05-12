@@ -3,14 +3,14 @@
 [![CI](https://github.com/PKU-ONELab/where-do-llms-go-wrong/actions/workflows/smoke-test.yml/badge.svg)](https://github.com/PKU-ONELab/where-do-llms-go-wrong/actions/workflows/smoke-test.yml)
 [![PyPI](https://img.shields.io/pypi/v/ai-reviewer-diagnostics.svg)](https://pypi.org/project/ai-reviewer-diagnostics/)
 [![Paper](https://img.shields.io/badge/CIKM-2025-blue)](https://doi.org/10.1145/3746252.3761274)
-[![Dataset](https://img.shields.io/badge/Hugging%20Face-Dataset-yellow)](https://huggingface.co/datasets/leejamesssss/ai-reviewer-diagnostic-data)
+[![Dataset](https://img.shields.io/badge/Hugging%20Face-Dataset-yellow)](https://huggingface.co/datasets/PKU-ONELab/ai-reviewer-diagnostic-data)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 Official repository for the CIKM 2025 paper **“Where Do LLMs Go Wrong? Diagnosing Automated Peer Review via Aspect-Guided Multi-Level Perturbation.”**
 
-Use this repo to evaluate automated peer-review systems on paired original/perturbed inputs and generate aspect-level diagnostic reports. The data lives on [Hugging Face](https://huggingface.co/datasets/leejamesssss/ai-reviewer-diagnostic-data); the installable reporting CLI lives on [PyPI](https://pypi.org/project/ai-reviewer-diagnostics/).
+Use this repo to evaluate automated peer-review systems on paired original/perturbed inputs and generate aspect-level diagnostic reports. The data lives on [Hugging Face](https://huggingface.co/datasets/PKU-ONELab/ai-reviewer-diagnostic-data); the installable reporting CLI lives on [PyPI](https://pypi.org/project/ai-reviewer-diagnostics/).
 
-![AI reviewer diagnostics workflow](https://huggingface.co/datasets/leejamesssss/ai-reviewer-diagnostic-data/resolve/main/assets/teaser.png)
+![AI reviewer diagnostics workflow](https://huggingface.co/datasets/PKU-ONELab/ai-reviewer-diagnostic-data/resolve/main/assets/teaser.png)
 
 ## Start fast
 
@@ -42,7 +42,7 @@ make demo-report
 | Need | Use |
 | --- | --- |
 | Diagnostic report CLI | `ai-reviewer-diagnostics` / `ai-reviewer-report` |
-| Main paired perturbation data | [HF dataset](https://huggingface.co/datasets/leejamesssss/ai-reviewer-diagnostic-data) → `data/content_pairs/*.jsonl` |
+| Main paired perturbation data | [HF dataset](https://huggingface.co/datasets/PKU-ONELab/ai-reviewer-diagnostic-data) → `data/content_pairs/*.jsonl` |
 | Released score artifacts | HF dataset → `data/annotation_scores/*.jsonl` |
 | Prompt templates | [`prompts/`](prompts/) |
 | API / local inference wrappers | [`scripts/`](scripts/) |
@@ -55,14 +55,14 @@ The primary dataset is before/after perturbation pairs:
 
 ```python
 from datasets import load_dataset
-pairs = load_dataset("leejamesssss/ai-reviewer-diagnostic-data", split="train")
+pairs = load_dataset("PKU-ONELab/ai-reviewer-diagnostic-data", split="train")
 print(pairs[0].keys())  # id, source, aspect, content_before, content_after
 ```
 
 Download the full HF repo when you need manifests or score artifacts:
 
 ```bash
-hf download leejamesssss/ai-reviewer-diagnostic-data   --repo-type dataset   --local-dir ai-reviewer-diagnostic-data
+hf download PKU-ONELab/ai-reviewer-diagnostic-data   --repo-type dataset   --local-dir ai-reviewer-diagnostic-data
 python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data
 ```
 

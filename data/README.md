@@ -2,12 +2,12 @@
 
 Large artifacts are hosted on Hugging Face, not committed to GitHub:
 
-https://huggingface.co/datasets/leejamesssss/ai-reviewer-diagnostic-data
+https://huggingface.co/datasets/PKU-ONELab/ai-reviewer-diagnostic-data
 
 Quick use:
 
 ```bash
-hf download leejamesssss/ai-reviewer-diagnostic-data   --repo-type dataset   --local-dir ai-reviewer-diagnostic-data
+hf download PKU-ONELab/ai-reviewer-diagnostic-data   --repo-type dataset   --local-dir ai-reviewer-diagnostic-data
 python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data
 ```
 

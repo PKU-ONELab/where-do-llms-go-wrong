@@ -112,7 +112,7 @@ def main() -> None:
         },
         "next_steps": [
             "uv run make smoke-test",
-            "uv run hf download leejamesssss/ai-reviewer-diagnostic-data --repo-type dataset --local-dir ai-reviewer-diagnostic-data",
+            "uv run hf download PKU-ONELab/ai-reviewer-diagnostic-data --repo-type dataset --local-dir ai-reviewer-diagnostic-data",
             "uv run python scripts/summarize_release_data.py --data-dir ai-reviewer-diagnostic-data/data",
         ],
         "citation": {

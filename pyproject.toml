@@ -38,7 +38,7 @@ dependencies = [
 [project.urls]
 Homepage = "https://github.com/PKU-ONELab/where-do-llms-go-wrong"
 Paper = "https://doi.org/10.1145/3746252.3761274"
-Dataset = "https://huggingface.co/datasets/leejamesssss/ai-reviewer-diagnostic-data"
+Dataset = "https://huggingface.co/datasets/PKU-ONELab/ai-reviewer-diagnostic-data"
 
 [project.scripts]
 ai-reviewer-diagnostics = "ai_reviewer_diagnostics.report:main"
